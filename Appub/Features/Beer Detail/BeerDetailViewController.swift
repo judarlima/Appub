@@ -2,7 +2,7 @@ import UIKit
 import NVActivityIndicatorView
 
 struct BeerDetailViewModel {
-  let image: UIImage
+  let imageURL: String
   let name: String
   let tagline: String
   let abv: String
@@ -22,7 +22,8 @@ class BeerDetailViewController: UIViewController {
   lazy var activityData = ActivityData()
   
   func bind(viewModel: BeerDetailViewModel) {
-    beerImage.image = viewModel.image
+    let imageURL = URL(string: viewModel.imageURL)
+    beerImage.kf.setImage(with: imageURL)
     nameLabel.text = "name: " + viewModel.name
     taglineLabel.text = "tagline: " + viewModel.tagline
     abvLabel.text = "abv: " + viewModel.abv

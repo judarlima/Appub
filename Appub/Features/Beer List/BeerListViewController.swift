@@ -2,7 +2,7 @@ import UIKit
 import NVActivityIndicatorView
 
 struct BeerCollectionViewModel {
-  let beerImage: UIImage
+  let beerImage: String
   let beerNameLabel: String
   let beerAbvLabel: String
 }

@@ -26,14 +26,10 @@ class BeersInteractor {
       switch result {
       case let .success(allBeers):
         interactor.allBeers = allBeers
-        var beersViewModel: [BeerCollectionViewModel] = []
-        allBeers.forEach({ (beer) in
-          guard let imageURL = URL(string: beer.imageURL) else { return }
-          let beerImage = interactor.downloadBeerImage(url: imageURL)
-          beersViewModel.append(BeerCollectionViewModel(beerImage: beerImage,
-                                  beerNameLabel: beer.name,
-                                  beerAbvLabel: String(beer.abv)))
-        })
+        interactor.allBeers = allBeers
+        let beersViewModel = allBeers.map({ BeerCollectionViewModel(beerImage: $0.imageURL,
+                                                                    beerNameLabel: $0.name,
+                                                                    beerAbvLabel: String($0.abv)) })
         interactor.presenter.showBeerList(beers: beersViewModel)
       case .fail(let error):
         interactor.presenter.showError(error: error)
@@ -42,14 +38,13 @@ class BeersInteractor {
   }
   
   func beer(at index: Int) {
-    gateway.getBeer(with: index) { [weak self] (result) in
+    let correctIndex = index + 1
+    gateway.getBeer(with: correctIndex) { [weak self] (result) in
       guard let interactor = self else { return }
       switch result {
       case let .success(beer):
         let beerIbu = beer.ibu != nil ? "\(beer.ibu!)" : "N/A"
-        guard let imageURL = URL(string: beer.imageURL) else { return }
-        let beerImage = interactor.downloadBeerImage(url: imageURL)
-        let beerViewModel = BeerDetailViewModel(image: beerImage,
+        let beerViewModel = BeerDetailViewModel(imageURL: beer.imageURL,
                                                 name: beer.name,
                                                 tagline: beer.tagline,
                                                 abv: "\(beer.abv)",
@@ -61,17 +56,5 @@ class BeersInteractor {
         interactor.presenter.showError(error: error)
       }
     }
-  }
-  
-  private func downloadBeerImage(url: URL) -> UIImage {
-    var beerImage: UIImage!
-    ImageDownloader.default.downloadImage(with: url, completionHandler: { (image, _, _, _) in
-      if let downloadedImage = image?.images?.first {
-        beerImage = downloadedImage
-      } else {
-        beerImage = UIImage()
-      }
-    })
-    return beerImage
   }
 }
