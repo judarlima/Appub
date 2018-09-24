@@ -1,15 +1,14 @@
 //
-//  AppubTests.swift
-//  AppubTests
+//  AppubUnitTests.swift
+//  AppubUnitTests
 //
-//  Created by Judar Lima on 9/22/18.
+//  Created by Judar Lima on 9/24/18.
 //  Copyright © 2018 Raduj. All rights reserved.
 //
 
 import XCTest
-@testable import Appub
 
-class AppubTests: XCTestCase {
+class AppubUnitTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

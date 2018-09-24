@@ -8,17 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		155D2A33469FFD7DCEBD9713 /* Pods_Appub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5548DCAD7D29363C358BE071 /* Pods_Appub.framework */; };
-		B65AE3DDC495AEB392E46E7F /* Pods_AppubTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4629235870A90FD4AE25B45 /* Pods_AppubTests.framework */; };
 		E22B45CF215837ED006B318B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45CE215837ED006B318B /* Result.swift */; };
 		E22B45D121583822006B318B /* ServiceSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D021583822006B318B /* ServiceSetup.swift */; };
 		E22B45D421583AD8006B318B /* BeersInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D321583AD8006B318B /* BeersInteractor.swift */; };
 		E22B45D621584655006B318B /* BeerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D521584655006B318B /* BeerDetailViewController.swift */; };
 		E22B45DC21584ABA006B318B /* BeerDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45DB21584ABA006B318B /* BeerDetailInteractor.swift */; };
 		E22B45DE21585573006B318B /* BeersViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45DD21585573006B318B /* BeersViewRouter.swift */; };
+		E22B45ED2158954E006B318B /* AppubUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45EC2158954E006B318B /* AppubUnitTests.swift */; };
+		E22B45F6215895A0006B318B /* BeersInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45F5215895A0006B318B /* BeersInteractorTests.swift */; };
 		E2CA56FD21569C43005D2925 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA56FC21569C43005D2925 /* AppDelegate.swift */; };
 		E2CA570421569C44005D2925 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2CA570321569C44005D2925 /* Assets.xcassets */; };
 		E2CA570721569C44005D2925 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CA570521569C44005D2925 /* LaunchScreen.storyboard */; };
-		E2CA571221569C45005D2925 /* AppubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA571121569C45005D2925 /* AppubTests.swift */; };
 		E2CA572021569CA2005D2925 /* BeerList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CA571F21569CA2005D2925 /* BeerList.storyboard */; };
 		E2CA572221569D40005D2925 /* BeerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA572121569D40005D2925 /* BeerListViewController.swift */; };
 		E2CA57262156E0F6005D2925 /* BeerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA57252156E0F6005D2925 /* BeerCollectionViewCell.swift */; };
@@ -31,7 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E2CA570E21569C45005D2925 /* PBXContainerItemProxy */ = {
+		E22B45EF2158954E006B318B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E2CA56F121569C43005D2925 /* Project object */;
 			proxyType = 1;
@@ -52,14 +52,15 @@
 		E22B45D521584655006B318B /* BeerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerDetailViewController.swift; sourceTree = "<group>"; };
 		E22B45DB21584ABA006B318B /* BeerDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerDetailInteractor.swift; sourceTree = "<group>"; };
 		E22B45DD21585573006B318B /* BeersViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeersViewRouter.swift; sourceTree = "<group>"; };
+		E22B45EA2158954E006B318B /* AppubUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppubUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E22B45EC2158954E006B318B /* AppubUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppubUnitTests.swift; sourceTree = "<group>"; };
+		E22B45EE2158954E006B318B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E22B45F5215895A0006B318B /* BeersInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeersInteractorTests.swift; sourceTree = "<group>"; };
 		E2CA56F921569C43005D2925 /* Appub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Appub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CA56FC21569C43005D2925 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2CA570321569C44005D2925 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2CA570621569C44005D2925 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2CA570821569C44005D2925 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E2CA570D21569C45005D2925 /* AppubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E2CA571121569C45005D2925 /* AppubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppubTests.swift; sourceTree = "<group>"; };
-		E2CA571321569C45005D2925 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2CA571F21569CA2005D2925 /* BeerList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BeerList.storyboard; sourceTree = "<group>"; };
 		E2CA572121569D40005D2925 /* BeerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerListViewController.swift; sourceTree = "<group>"; };
 		E2CA57252156E0F6005D2925 /* BeerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -73,19 +74,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E22B45E72158954E006B318B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E2CA56F621569C43005D2925 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				155D2A33469FFD7DCEBD9713 /* Pods_Appub.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E2CA570A21569C45005D2925 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B65AE3DDC495AEB392E46E7F /* Pods_AppubTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,11 +138,29 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		E22B45EB2158954E006B318B /* AppubUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				E22B45F42158955A006B318B /* Interactors */,
+				E22B45EC2158954E006B318B /* AppubUnitTests.swift */,
+				E22B45EE2158954E006B318B /* Info.plist */,
+			);
+			path = AppubUnitTests;
+			sourceTree = "<group>";
+		};
+		E22B45F42158955A006B318B /* Interactors */ = {
+			isa = PBXGroup;
+			children = (
+				E22B45F5215895A0006B318B /* BeersInteractorTests.swift */,
+			);
+			path = Interactors;
+			sourceTree = "<group>";
+		};
 		E2CA56F021569C43005D2925 = {
 			isa = PBXGroup;
 			children = (
 				E2CA56FB21569C43005D2925 /* Appub */,
-				E2CA571021569C45005D2925 /* AppubTests */,
+				E22B45EB2158954E006B318B /* AppubUnitTests */,
 				E2CA56FA21569C43005D2925 /* Products */,
 				D9A653F521F76F78E9989303 /* Pods */,
 				7C8D3D527E69C63A7B94C9E9 /* Frameworks */,
@@ -153,7 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				E2CA56F921569C43005D2925 /* Appub.app */,
-				E2CA570D21569C45005D2925 /* AppubTests.xctest */,
+				E22B45EA2158954E006B318B /* AppubUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,15 +186,6 @@
 				E2CA572A2156F17E005D2925 /* Network */,
 			);
 			path = Appub;
-			sourceTree = "<group>";
-		};
-		E2CA571021569C45005D2925 /* AppubTests */ = {
-			isa = PBXGroup;
-			children = (
-				E2CA571121569C45005D2925 /* AppubTests.swift */,
-				E2CA571321569C45005D2925 /* Info.plist */,
-			);
-			path = AppubTests;
 			sourceTree = "<group>";
 		};
 		E2CA571C21569C85005D2925 /* Features */ = {
@@ -234,6 +243,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E22B45E92158954E006B318B /* AppubUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E22B45F12158954E006B318B /* Build configuration list for PBXNativeTarget "AppubUnitTests" */;
+			buildPhases = (
+				E22B45E62158954E006B318B /* Sources */,
+				E22B45E72158954E006B318B /* Frameworks */,
+				E22B45E82158954E006B318B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E22B45F02158954E006B318B /* PBXTargetDependency */,
+			);
+			name = AppubUnitTests;
+			productName = AppubUnitTests;
+			productReference = E22B45EA2158954E006B318B /* AppubUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		E2CA56F821569C43005D2925 /* Appub */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2CA571621569C45005D2925 /* Build configuration list for PBXNativeTarget "Appub" */;
@@ -253,25 +280,6 @@
 			productReference = E2CA56F921569C43005D2925 /* Appub.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E2CA570C21569C45005D2925 /* AppubTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E2CA571921569C45005D2925 /* Build configuration list for PBXNativeTarget "AppubTests" */;
-			buildPhases = (
-				4CFC82E8AE6E6437F0431857 /* [CP] Check Pods Manifest.lock */,
-				E2CA570921569C45005D2925 /* Sources */,
-				E2CA570A21569C45005D2925 /* Frameworks */,
-				E2CA570B21569C45005D2925 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E2CA570F21569C45005D2925 /* PBXTargetDependency */,
-			);
-			name = AppubTests;
-			productName = AppubTests;
-			productReference = E2CA570D21569C45005D2925 /* AppubTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -282,12 +290,12 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Raduj;
 				TargetAttributes = {
-					E2CA56F821569C43005D2925 = {
-						CreatedOnToolsVersion = 9.4.1;
-					};
-					E2CA570C21569C45005D2925 = {
+					E22B45E92158954E006B318B = {
 						CreatedOnToolsVersion = 9.4.1;
 						TestTargetID = E2CA56F821569C43005D2925;
+					};
+					E2CA56F821569C43005D2925 = {
+						CreatedOnToolsVersion = 9.4.1;
 					};
 				};
 			};
@@ -305,12 +313,19 @@
 			projectRoot = "";
 			targets = (
 				E2CA56F821569C43005D2925 /* Appub */,
-				E2CA570C21569C45005D2925 /* AppubTests */,
+				E22B45E92158954E006B318B /* AppubUnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E22B45E82158954E006B318B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E2CA56F721569C43005D2925 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -319,13 +334,6 @@
 				E2CA57292156EF0F005D2925 /* BeerDetail.storyboard in Resources */,
 				E2CA570721569C44005D2925 /* LaunchScreen.storyboard in Resources */,
 				E2CA570421569C44005D2925 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E2CA570B21569C45005D2925 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,24 +352,6 @@
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Appub-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4CFC82E8AE6E6437F0431857 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AppubTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -391,6 +381,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E22B45E62158954E006B318B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E22B45F6215895A0006B318B /* BeersInteractorTests.swift in Sources */,
+				E22B45ED2158954E006B318B /* AppubUnitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E2CA56F521569C43005D2925 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -412,21 +411,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E2CA570921569C45005D2925 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E2CA571221569C45005D2925 /* AppubTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E2CA570F21569C45005D2925 /* PBXTargetDependency */ = {
+		E22B45F02158954E006B318B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E2CA56F821569C43005D2925 /* Appub */;
-			targetProxy = E2CA570E21569C45005D2925 /* PBXContainerItemProxy */;
+			targetProxy = E22B45EF2158954E006B318B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -442,6 +433,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E22B45F22158954E006B318B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AppubUnitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.raduj.AppubUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Appub.app/Appub";
+			};
+			name = Debug;
+		};
+		E22B45F32158954E006B318B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AppubUnitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.raduj.AppubUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Appub.app/Appub";
+			};
+			name = Release;
+		};
 		E2CA571421569C45005D2925 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -592,51 +621,18 @@
 			};
 			name = Release;
 		};
-		E2CA571A21569C45005D2925 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4BFA742D6425E5440C4401C5 /* Pods-AppubTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AppubTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = br.com.raduj.AppubTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Appub.app/Appub";
-			};
-			name = Debug;
-		};
-		E2CA571B21569C45005D2925 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B69BFFBC65E7195303AD6706 /* Pods-AppubTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AppubTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = br.com.raduj.AppubTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Appub.app/Appub";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E22B45F12158954E006B318B /* Build configuration list for PBXNativeTarget "AppubUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E22B45F22158954E006B318B /* Debug */,
+				E22B45F32158954E006B318B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E2CA56F421569C43005D2925 /* Build configuration list for PBXProject "Appub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -651,15 +647,6 @@
 			buildConfigurations = (
 				E2CA571721569C45005D2925 /* Debug */,
 				E2CA571821569C45005D2925 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E2CA571921569C45005D2925 /* Build configuration list for PBXNativeTarget "AppubTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E2CA571A21569C45005D2925 /* Debug */,
-				E2CA571B21569C45005D2925 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
