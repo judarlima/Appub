@@ -15,8 +15,8 @@ class BeerCollectionViewCell: UICollectionViewCell {
   func bind(viewModel: BeerCollectionViewModel) {
     let imageURL = URL(string: viewModel.beerImage)
     beerImage.kf.setImage(with: imageURL)
-    beerNameLabel.text = viewModel.beerNameLabel
-    beerAbvLabel.text = viewModel.beerAbvLabel
+    beerNameLabel.text = "name: " + viewModel.beerNameLabel
+    beerAbvLabel.text = "abv: " + viewModel.beerAbvLabel
   }
   
   private func makeRounded() {

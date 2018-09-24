@@ -13,10 +13,8 @@
 		E22B45D121583822006B318B /* ServiceSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D021583822006B318B /* ServiceSetup.swift */; };
 		E22B45D421583AD8006B318B /* BeersInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D321583AD8006B318B /* BeersInteractor.swift */; };
 		E22B45D621584655006B318B /* BeerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D521584655006B318B /* BeerDetailViewController.swift */; };
-		E22B45D821584672006B318B /* BeerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D721584672006B318B /* BeerDetailView.swift */; };
 		E22B45DC21584ABA006B318B /* BeerDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45DB21584ABA006B318B /* BeerDetailInteractor.swift */; };
 		E22B45DE21585573006B318B /* BeersViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45DD21585573006B318B /* BeersViewRouter.swift */; };
-		E22B45E021586375006B318B /* BeerDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E22B45DF21586375006B318B /* BeerDetailView.xib */; };
 		E2CA56FD21569C43005D2925 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA56FC21569C43005D2925 /* AppDelegate.swift */; };
 		E2CA570421569C44005D2925 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2CA570321569C44005D2925 /* Assets.xcassets */; };
 		E2CA570721569C44005D2925 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CA570521569C44005D2925 /* LaunchScreen.storyboard */; };
@@ -52,10 +50,8 @@
 		E22B45D021583822006B318B /* ServiceSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSetup.swift; sourceTree = "<group>"; };
 		E22B45D321583AD8006B318B /* BeersInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeersInteractor.swift; sourceTree = "<group>"; };
 		E22B45D521584655006B318B /* BeerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerDetailViewController.swift; sourceTree = "<group>"; };
-		E22B45D721584672006B318B /* BeerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerDetailView.swift; sourceTree = "<group>"; };
 		E22B45DB21584ABA006B318B /* BeerDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerDetailInteractor.swift; sourceTree = "<group>"; };
 		E22B45DD21585573006B318B /* BeersViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeersViewRouter.swift; sourceTree = "<group>"; };
-		E22B45DF21586375006B318B /* BeerDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BeerDetailView.xib; sourceTree = "<group>"; };
 		E2CA56F921569C43005D2925 /* Appub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Appub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CA56FC21569C43005D2925 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2CA570321569C44005D2925 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -209,8 +205,6 @@
 				E22B45DB21584ABA006B318B /* BeerDetailInteractor.swift */,
 				E2CA57282156EF0F005D2925 /* BeerDetail.storyboard */,
 				E22B45D521584655006B318B /* BeerDetailViewController.swift */,
-				E22B45D721584672006B318B /* BeerDetailView.swift */,
-				E22B45DF21586375006B318B /* BeerDetailView.xib */,
 			);
 			path = "Beer Detail";
 			sourceTree = "<group>";
@@ -321,7 +315,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E22B45E021586375006B318B /* BeerDetailView.xib in Resources */,
 				E2CA572021569CA2005D2925 /* BeerList.storyboard in Resources */,
 				E2CA57292156EF0F005D2925 /* BeerDetail.storyboard in Resources */,
 				E2CA570721569C44005D2925 /* LaunchScreen.storyboard in Resources */,
@@ -413,7 +406,6 @@
 				E22B45CF215837ED006B318B /* Result.swift in Sources */,
 				E22B45D421583AD8006B318B /* BeersInteractor.swift in Sources */,
 				E2CA57302156F258005D2925 /* BeersGateway.swift in Sources */,
-				E22B45D821584672006B318B /* BeerDetailView.swift in Sources */,
 				E22B45D121583822006B318B /* ServiceSetup.swift in Sources */,
 				E22B45DE21585573006B318B /* BeersViewRouter.swift in Sources */,
 				E2CA56FD21569C43005D2925 /* AppDelegate.swift in Sources */,

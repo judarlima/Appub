@@ -35,6 +35,10 @@ class BeerListViewController: UICollectionViewController {
     self.interactor.beerList()
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    loadingView.hide()
+  }
+  
   
   private func setupView() {
     guard let collectionView = collectionView else { return }
@@ -65,8 +69,10 @@ class BeerListViewController: UICollectionViewController {
   }
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    DispatchQueue.main.async {
-      self.interactor.beer(at: indexPath.row)
+    DispatchQueue.main.async { [weak self] in
+      guard let controller = self else { return }
+      controller.interactor.beer(at: indexPath.row)
+      controller.loadingView.show(on: controller.view)
     }
   }
   
@@ -93,9 +99,6 @@ extension BeerListViewController: BeersListPresenter {
       self.collectionView?.reloadData()
       self.loadingView.hide()
     }
-  }
-  
-  func showBeer(detail: BeerDetailViewModel) {
   }
   
   func showError(error: Error?) {
