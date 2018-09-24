@@ -12,7 +12,6 @@
         <!--Beer List-->
         <scene sceneID="VTF-6U-FeP">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4WL-7j-n9c" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <collectionViewController title="Beer List" id="eMC-GJ-hAw" customClass="BeerListViewController" customModule="Appub" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="WT0-K7-r8G">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -97,18 +96,19 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Beer List" id="ax5-dh-UUZ"/>
                 </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4WL-7j-n9c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1383.2" y="-228.03598200899552"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DgD-6k-tEv">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pYi-Fn-xUQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CSw-6N-H3U" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="19t-1i-5c4">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="barTintColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -119,6 +119,7 @@
                         <segue destination="eMC-GJ-hAw" kind="relationship" relationship="rootViewController" id="3hj-bQ-l7e"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pYi-Fn-xUQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="444" y="-228.03598200899552"/>
         </scene>
