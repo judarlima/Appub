@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		155D2A33469FFD7DCEBD9713 /* Pods_Appub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5548DCAD7D29363C358BE071 /* Pods_Appub.framework */; };
+		544E4D347B58F1A23B725D8C /* Pods_AppubUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DA3279CBE1559462CF4E4 /* Pods_AppubUnitTests.framework */; };
 		E22B45CF215837ED006B318B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45CE215837ED006B318B /* Result.swift */; };
 		E22B45D121583822006B318B /* ServiceSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D021583822006B318B /* ServiceSetup.swift */; };
 		E22B45D421583AD8006B318B /* BeersInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D321583AD8006B318B /* BeersInteractor.swift */; };
 		E22B45D621584655006B318B /* BeerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D521584655006B318B /* BeerDetailViewController.swift */; };
-		E22B45DC21584ABA006B318B /* BeerDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45DB21584ABA006B318B /* BeerDetailInteractor.swift */; };
 		E22B45DE21585573006B318B /* BeersViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45DD21585573006B318B /* BeersViewRouter.swift */; };
 		E22B45ED2158954E006B318B /* AppubUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45EC2158954E006B318B /* AppubUnitTests.swift */; };
 		E22B45F6215895A0006B318B /* BeersInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45F5215895A0006B318B /* BeersInteractorTests.swift */; };
@@ -26,7 +26,6 @@
 		E2CA572E2156F221005D2925 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA572D2156F221005D2925 /* ServiceError.swift */; };
 		E2CA57302156F258005D2925 /* BeersGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA572F2156F258005D2925 /* BeersGateway.swift */; };
 		E2CA573221572BDB005D2925 /* Beer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA573121572BDB005D2925 /* Beer.swift */; };
-		E2CA573721573FD7005D2925 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA573621573FD7005D2925 /* LoadingView.swift */; };
 		E2CA573F2157DB62005D2925 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA573E2157DB62005D2925 /* Service.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,13 +43,14 @@
 		13FC7ACF9B4E03907A246045 /* Pods-Appub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appub.release.xcconfig"; path = "Pods/Target Support Files/Pods-Appub/Pods-Appub.release.xcconfig"; sourceTree = "<group>"; };
 		4BFA742D6425E5440C4401C5 /* Pods-AppubTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppubTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppubTests/Pods-AppubTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5548DCAD7D29363C358BE071 /* Pods_Appub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Appub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		63983CB02D2F6ECA686018C7 /* Pods-AppubUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppubUnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppubUnitTests/Pods-AppubUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B20DA3279CBE1559462CF4E4 /* Pods_AppubUnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppubUnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B69BFFBC65E7195303AD6706 /* Pods-AppubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppubTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppubTests/Pods-AppubTests.release.xcconfig"; sourceTree = "<group>"; };
 		C313FA85CE1FAA39A5B1EE13 /* Pods-Appub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appub.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Appub/Pods-Appub.debug.xcconfig"; sourceTree = "<group>"; };
 		E22B45CE215837ED006B318B /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		E22B45D021583822006B318B /* ServiceSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSetup.swift; sourceTree = "<group>"; };
 		E22B45D321583AD8006B318B /* BeersInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeersInteractor.swift; sourceTree = "<group>"; };
 		E22B45D521584655006B318B /* BeerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerDetailViewController.swift; sourceTree = "<group>"; };
-		E22B45DB21584ABA006B318B /* BeerDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerDetailInteractor.swift; sourceTree = "<group>"; };
 		E22B45DD21585573006B318B /* BeersViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeersViewRouter.swift; sourceTree = "<group>"; };
 		E22B45EA2158954E006B318B /* AppubUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppubUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E22B45EC2158954E006B318B /* AppubUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppubUnitTests.swift; sourceTree = "<group>"; };
@@ -68,9 +68,9 @@
 		E2CA572D2156F221005D2925 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
 		E2CA572F2156F258005D2925 /* BeersGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeersGateway.swift; sourceTree = "<group>"; };
 		E2CA573121572BDB005D2925 /* Beer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beer.swift; sourceTree = "<group>"; };
-		E2CA573621573FD7005D2925 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E2CA573E2157DB62005D2925 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		F4629235870A90FD4AE25B45 /* Pods_AppubTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppubTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAA572B73B46839BE871872B /* Pods-AppubUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppubUnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppubUnitTests/Pods-AppubUnitTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				544E4D347B58F1A23B725D8C /* Pods_AppubUnitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +98,7 @@
 			children = (
 				5548DCAD7D29363C358BE071 /* Pods_Appub.framework */,
 				F4629235870A90FD4AE25B45 /* Pods_AppubTests.framework */,
+				B20DA3279CBE1559462CF4E4 /* Pods_AppubUnitTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -108,16 +110,10 @@
 				13FC7ACF9B4E03907A246045 /* Pods-Appub.release.xcconfig */,
 				4BFA742D6425E5440C4401C5 /* Pods-AppubTests.debug.xcconfig */,
 				B69BFFBC65E7195303AD6706 /* Pods-AppubTests.release.xcconfig */,
+				63983CB02D2F6ECA686018C7 /* Pods-AppubUnitTests.debug.xcconfig */,
+				FAA572B73B46839BE871872B /* Pods-AppubUnitTests.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		E22B45D221583A52006B318B /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				E2CA573621573FD7005D2925 /* LoadingView.swift */,
-			);
-			path = Shared;
 			sourceTree = "<group>";
 		};
 		E22B45D921584A44006B318B /* Common */ = {
@@ -180,7 +176,6 @@
 			isa = PBXGroup;
 			children = (
 				E2CA571C21569C85005D2925 /* Features */,
-				E22B45D221583A52006B318B /* Shared */,
 				E2CA573521573FB7005D2925 /* Supporting Files */,
 				E22B45DA21584A7A006B318B /* Models */,
 				E2CA572A2156F17E005D2925 /* Network */,
@@ -211,7 +206,6 @@
 		E2CA57272156EEFD005D2925 /* Beer Detail */ = {
 			isa = PBXGroup;
 			children = (
-				E22B45DB21584ABA006B318B /* BeerDetailInteractor.swift */,
 				E2CA57282156EF0F005D2925 /* BeerDetail.storyboard */,
 				E22B45D521584655006B318B /* BeerDetailViewController.swift */,
 			);
@@ -247,6 +241,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E22B45F12158954E006B318B /* Build configuration list for PBXNativeTarget "AppubUnitTests" */;
 			buildPhases = (
+				B252868B99E3370EB16FF2EE /* [CP] Check Pods Manifest.lock */,
 				E22B45E62158954E006B318B /* Sources */,
 				E22B45E72158954E006B318B /* Frameworks */,
 				E22B45E82158954E006B318B /* Resources */,
@@ -358,6 +353,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B252868B99E3370EB16FF2EE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AppubUnitTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		E0A7493C32FEFA2EE0265C29 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -366,11 +379,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Appub/Pods-Appub-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -398,8 +413,6 @@
 				E22B45D621584655006B318B /* BeerDetailViewController.swift in Sources */,
 				E2CA57262156E0F6005D2925 /* BeerCollectionViewCell.swift in Sources */,
 				E2CA572221569D40005D2925 /* BeerListViewController.swift in Sources */,
-				E2CA573721573FD7005D2925 /* LoadingView.swift in Sources */,
-				E22B45DC21584ABA006B318B /* BeerDetailInteractor.swift in Sources */,
 				E2CA573221572BDB005D2925 /* Beer.swift in Sources */,
 				E2CA573F2157DB62005D2925 /* Service.swift in Sources */,
 				E22B45CF215837ED006B318B /* Result.swift in Sources */,
@@ -435,6 +448,7 @@
 /* Begin XCBuildConfiguration section */
 		E22B45F22158954E006B318B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 63983CB02D2F6ECA686018C7 /* Pods-AppubUnitTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -454,6 +468,7 @@
 		};
 		E22B45F32158954E006B318B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FAA572B73B46839BE871872B /* Pods-AppubUnitTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;

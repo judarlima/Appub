@@ -1,17 +1,16 @@
 import UIKit
+import NVActivityIndicatorView
 
 struct BeerCollectionViewModel {
-  let beerImage: String
+  let beerImage: UIImage
   let beerNameLabel: String
   let beerAbvLabel: String
 }
 
-class BeerListViewController: UICollectionViewController {
+class BeerListViewController: UIViewController {
   
-  private lazy var loadingView: LoadingView = {
-    let view = LoadingView(frame: self.view.bounds)
-    return view
-  }()
+  @IBOutlet private weak var collectionView: UICollectionView!
+  
   private var allBeers: [BeerCollectionViewModel] = []
   
   private lazy var router: BeerListRouter = {
@@ -19,6 +18,8 @@ class BeerListViewController: UICollectionViewController {
     router.viewController = self
     return router
   }()
+  
+  lazy var activityData = ActivityData()
   
   private lazy var interactor: BeersInteractor = {
     let interactor = BeersInteractor(gateway: BeersGateway(service: APIService()),
@@ -31,78 +32,41 @@ class BeerListViewController: UICollectionViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupView()
-    loadingView.show(on: self.view)
     self.interactor.beerList()
+    NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
   }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    loadingView.hide()
-  }
-  
   
   private func setupView() {
-    guard let collectionView = collectionView else { return }
     collectionView.backgroundColor = .clear
     collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
   }
   
-  override func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return 1
-  }
-  
-  
-  override func collectionView(_ collectionView: UICollectionView,
-                               numberOfItemsInSection section: Int) -> Int {
+}
+
+extension BeerListViewController: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return allBeers.count
   }
   
-  override func collectionView(_ collectionView: UICollectionView,
-                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BeerCollectionViewCell",
-                                                        for: indexPath) as? BeerCollectionViewCell
-      else {
-        return UICollectionViewCell()
-    }
-    let beerForIndex = allBeers[indexPath.row]
-    cell.bind(viewModel: beerForIndex)
-    return cell
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BeerCollectionViewCell",
+                                                            for: indexPath) as? BeerCollectionViewCell
+          else {
+            return UICollectionViewCell()
+        }
+        let beerForIndex = allBeers[indexPath.row]
+        cell.bind(viewModel: beerForIndex)
+        return cell
   }
-  
-  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+}
+
+extension BeerListViewController: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
     DispatchQueue.main.async { [weak self] in
       guard let controller = self else { return }
       controller.interactor.beer(at: indexPath.row)
-      controller.loadingView.show(on: controller.view)
     }
-  }
-  
-}
-
-extension BeerListViewController {
-  fileprivate func showAlertMessage(message: String) {
-    let alertController = UIAlertController(title: "Atenção",
-                                            message: message,
-                                            preferredStyle: UIAlertControllerStyle.alert)
-    let tryAgain = UIAlertAction(title: "Tentar Novamente", style: UIAlertActionStyle.default) { _ in
-      self.interactor.beerList()
-    }
-    alertController.addAction(tryAgain)
-    self.present(alertController, animated: true, completion: nil)
-  }
-}
-
-extension BeerListViewController: BeersListPresenter {
-  
-  func showBeerList(beers: [BeerCollectionViewModel]) {
-    DispatchQueue.main.async {
-      self.allBeers = beers
-      self.collectionView?.reloadData()
-      self.loadingView.hide()
-    }
-  }
-  
-  func showError(error: Error?) {
-    self.showAlertMessage(message: error?.localizedDescription ?? "Erro Desconhecido.")
   }
 }
 
@@ -115,5 +79,35 @@ extension BeerListViewController: UICollectionViewDelegateFlowLayout {
     let itemSize = (collectionView.frame.width - (contentInset.left + contentInset.right + rightSpace)) / 2
     
     return CGSize(width: itemSize, height: itemSize)
+  }
+}
+
+
+extension BeerListViewController {
+  fileprivate func showAlertMessage(message: String) {
+    let alertController = UIAlertController(title: "Atenção",
+                                            message: message,
+                                            preferredStyle: UIAlertControllerStyle.alert)
+    let tryAgain = UIAlertAction(title: "Tentar Novamente", style: UIAlertActionStyle.default) { _ in
+      self.interactor.beerList()
+    }
+    alertController.addAction(tryAgain)
+    self.present(alertController, animated: true, completion: nil)
+    NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+  }
+}
+
+extension BeerListViewController: BeersListPresenter {
+  
+  func showBeerList(beers: [BeerCollectionViewModel]) {
+    DispatchQueue.main.async {
+      self.allBeers = beers
+      self.collectionView?.reloadData()
+      NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+    }
+  }
+  
+  func showError(error: Error?) {
+    self.showAlertMessage(message: error?.localizedDescription ?? "Erro Desconhecido.")
   }
 }
