@@ -38,7 +38,8 @@ class BeersInteractor {
   }
   
   func beer(at index: Int) {
-    gateway.getBeer(with: index) { [weak self] (result) in
+    let correctIndex = index + 1
+    gateway.getBeer(with: correctIndex) { [weak self] (result) in
       guard let interactor = self else { return }
       switch result {
       case let .success(beer):
