@@ -3,7 +3,7 @@ target 'Appub' do
   pod "ReachabilitySwift", '~> 4.1.0'
   pod 'Kingfisher', '~> 4.0'
 
-  target 'AppubTests' do
+  target 'AppubUnitTests' do
     inherit! :search_paths
   end
 
