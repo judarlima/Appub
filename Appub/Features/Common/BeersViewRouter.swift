@@ -15,8 +15,6 @@ class BeerListRouter: BeerListRouterProtocol {
           fatalError("Could not instantiate BeerDetailViewController")
       }
       _ = destinationVC.view
-//      let loadingView = LoadingView(frame: destinationVC.view.bounds)
-//      loadingView.show(on: destinationVC.view)
       destinationVC.bind(viewModel: viewModel)
       self.viewController?.navigationController?.pushViewController(destinationVC, animated: true)
     }
