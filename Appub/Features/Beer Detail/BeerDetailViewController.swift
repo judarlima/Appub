@@ -1,7 +1,8 @@
 import UIKit
+import NVActivityIndicatorView
 
 struct BeerDetailViewModel {
-  let imageURL: String
+  let image: UIImage
   let name: String
   let tagline: String
   let abv: String
@@ -11,8 +12,6 @@ struct BeerDetailViewModel {
 
 class BeerDetailViewController: UIViewController {
   
-  var loadingView: LoadingView!
-  
   @IBOutlet private weak var beerImage: UIImageView!
   @IBOutlet private weak var nameLabel: UILabel!
   @IBOutlet private weak var taglineLabel: UILabel!
@@ -20,9 +19,10 @@ class BeerDetailViewController: UIViewController {
   @IBOutlet private weak var ibuLabel: UILabel!
   @IBOutlet private weak var descriptionLabel: UILabel!
   
+  lazy var activityData = ActivityData()
+  
   func bind(viewModel: BeerDetailViewModel) {
-    let imageURL = URL(string: viewModel.imageURL)
-    beerImage.kf.setImage(with: imageURL)
+    beerImage.image = viewModel.image
     nameLabel.text = "name: " + viewModel.name
     taglineLabel.text = "tagline: " + viewModel.tagline
     abvLabel.text = "abv: " + viewModel.abv
@@ -30,9 +30,7 @@ class BeerDetailViewController: UIViewController {
     descriptionLabel.text = viewModel.description
   }
   
-  func hide(loadingView: LoadingView) {
-    self.loadingView = loadingView
-    loadingView.hide()
+  override func viewDidLoad() {
+    NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
   }
-  
 }

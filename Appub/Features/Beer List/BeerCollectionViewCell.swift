@@ -13,8 +13,7 @@ class BeerCollectionViewCell: UICollectionViewCell {
   }
   
   func bind(viewModel: BeerCollectionViewModel) {
-    let imageURL = URL(string: viewModel.beerImage)
-    beerImage.kf.setImage(with: imageURL)
+    beerImage.image = viewModel.beerImage
     beerNameLabel.text = "name: " + viewModel.beerNameLabel
     beerAbvLabel.text = "abv: " + viewModel.beerAbvLabel
   }
