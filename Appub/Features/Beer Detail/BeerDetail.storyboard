@@ -10,11 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Beer Detail View Controller-->
         <scene sceneID="VGZ-3o-sBa">
             <objects>
-                <viewController id="tV4-Lq-19p" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="sVD-Fo-aZg">
+                <viewController storyboardIdentifier="BeerDetailViewController" id="tV4-Lq-19p" customClass="BeerDetailViewController" customModule="Appub" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sVD-Fo-aZg" customClass="BeerDetailView" customModule="Appub" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -76,7 +76,18 @@
                             <constraint firstItem="aeh-U1-1E4" firstAttribute="top" secondItem="WxF-aF-pTL" secondAttribute="top" id="sgv-2a-MZo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WxF-aF-pTL"/>
+                        <connections>
+                            <outlet property="abvLabel" destination="ALW-Eq-SuY" id="Jqs-WW-uRt"/>
+                            <outlet property="beerImage" destination="aeh-U1-1E4" id="oh9-av-rGG"/>
+                            <outlet property="descriptionLabel" destination="6WM-Jy-zne" id="qAc-eT-PHR"/>
+                            <outlet property="ibuLabel" destination="wZx-bN-q3T" id="KwQ-4a-orY"/>
+                            <outlet property="nameLabel" destination="33t-Xh-DSj" id="xxB-7v-0AS"/>
+                            <outlet property="taglineLabel" destination="XWG-hg-wBn" id="Gj4-Uj-XhS"/>
+                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="beerView" destination="sVD-Fo-aZg" id="iYo-HK-lcO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JP9-Ls-q15" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

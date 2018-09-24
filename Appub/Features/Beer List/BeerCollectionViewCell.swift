@@ -1,11 +1,3 @@
-//
-//  BeerListCollectionViewCell.swift
-//  Appub
-//
-//  Created by Judar Lima on 9/22/18.
-//  Copyright © 2018 Raduj. All rights reserved.
-//
-
 import UIKit
 import Kingfisher
 

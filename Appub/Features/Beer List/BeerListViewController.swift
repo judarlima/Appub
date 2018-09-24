@@ -12,28 +12,29 @@ class BeerListViewController: UICollectionViewController {
     let view = LoadingView(frame: self.view.bounds)
     return view
   }()
-  
   private var allBeers: [BeerCollectionViewModel] = []
   
+  private lazy var router: BeerListRouter = {
+    let router = BeerListRouter()
+    router.viewController = self
+    return router
+  }()
+  
+  private lazy var interactor: BeersInteractor = {
+    let interactor = BeersInteractor(gateway: BeersGateway(service: APIService()),
+                                     presenter: self,
+                                     router: self.router)
+    return interactor
+  }()
+  
+  //MARK: View Lifecycle
   override func viewDidLoad() {
-
     super.viewDidLoad()
     setupView()
     loadingView.show(on: self.view)
-    AppubAPIWorker.sharedInstance.fetchAllBeers { (beers, error) in
-      if let allBeers = beers {
-        self.allBeers = allBeers.map { BeerCollectionViewModel(beerImage: $0.imageURL,
-                                                               beerNameLabel: $0.name,
-                                                               beerAbvLabel: String($0.abv)) }
-        DispatchQueue.main.async {
-          self.loadingView.hide()
-          self.collectionView?.reloadData()
-        }
-      } else {
-        print(error.debugDescription)
-      }
-    }
+    self.interactor.beerList()
   }
+  
   
   private func setupView() {
     guard let collectionView = collectionView else { return }
@@ -63,6 +64,43 @@ class BeerListViewController: UICollectionViewController {
     return cell
   }
   
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    DispatchQueue.main.async {
+      self.interactor.beer(at: indexPath.row)
+    }
+  }
+  
+}
+
+extension BeerListViewController {
+  fileprivate func showAlertMessage(message: String) {
+    let alertController = UIAlertController(title: "Atenção",
+                                            message: message,
+                                            preferredStyle: UIAlertControllerStyle.alert)
+    let tryAgain = UIAlertAction(title: "Tentar Novamente", style: UIAlertActionStyle.default) { _ in
+      self.interactor.beerList()
+    }
+    alertController.addAction(tryAgain)
+    self.present(alertController, animated: true, completion: nil)
+  }
+}
+
+extension BeerListViewController: BeersListPresenter {
+  
+  func showBeerList(beers: [BeerCollectionViewModel]) {
+    DispatchQueue.main.async {
+      self.allBeers = beers
+      self.collectionView?.reloadData()
+      self.loadingView.hide()
+    }
+  }
+  
+  func showBeer(detail: BeerDetailViewModel) {
+  }
+  
+  func showError(error: Error?) {
+    self.showAlertMessage(message: error?.localizedDescription ?? "Erro Desconhecido.")
+  }
 }
 
 extension BeerListViewController: UICollectionViewDelegateFlowLayout {

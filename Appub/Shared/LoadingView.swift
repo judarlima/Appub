@@ -27,11 +27,10 @@ class LoadingView: UIActivityIndicatorView {
   
   func show(on view: UIView) {
     self.parentView = view
-    
-    if backgroundView.superview == nil {
-      backgroundView.center = view.center
-      backgroundView.addSubview(self)
-      view.addSubview(backgroundView)
+    if self.backgroundView.superview == nil {
+      self.backgroundView.center = view.center
+      self.backgroundView.addSubview(self)
+      view.addSubview(self.backgroundView)
     }
     
     view.isUserInteractionEnabled = false
