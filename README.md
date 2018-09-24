@@ -9,6 +9,8 @@
 - Cocoapods
 
 ## Instructions
-`git clone https://github.com/judarlima/Appub.git`
-`cd Appub`
-`pod install`
+```bash
+$ git clone https://github.com/judarlima/Appub.git
+$ cd Appub
+$ pod install
+```
