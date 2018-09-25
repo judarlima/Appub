@@ -3,7 +3,7 @@ import Reachability
 
 protocol BeersGatewayProtocol {
   func getAllBeers(completion: @escaping (Result<[Beer]>) -> Void)
-  func getBeer(with id: Int, completion: @escaping (Result<Beer>) -> Void)
+  func getBeer(with id: String, completion: @escaping (Result<Beer>) -> Void)
 }
 
 struct BeersGateway: BeersGatewayProtocol {
