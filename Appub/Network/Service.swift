@@ -9,7 +9,7 @@ struct APIService: ServiceProtocol {
   
   public func requestData(with setup: ServiceSetup, completion: @escaping (Data?, ServiceError?) -> Void) {
     guard canReachNetwork() else {
-      completion(nil, .failure("Você está sem conexão."))
+      completion(nil, .noConnection)
       return
     }
     guard let url = URL(string: setup.endpoint) else {
@@ -19,7 +19,7 @@ struct APIService: ServiceProtocol {
     URLSession.shared.dataTask(with: url) { (data, response, error) in
       if let error = error {
         print(error.localizedDescription)
-        completion(nil, .failure(error.localizedDescription))
+        completion(nil, .unexpected(error))
       } else if let data = data {
         completion(data, nil)
       } else {
@@ -35,5 +35,4 @@ struct APIService: ServiceProtocol {
       return false
     }
   }
-  
 }

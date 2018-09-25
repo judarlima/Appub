@@ -37,7 +37,7 @@ struct BeersGateway: BeersGatewayProtocol {
   
   private func generateResult(responseData: Data?, responseError: ServiceError?) -> Result<[Beer]> {
     if let error = responseError {
-      return Result.fail(ServiceError.failure(error.localizedDescription))
+      return Result.fail(ServiceError.unexpected(error))
     }
     else if let data = responseData {
       do {
@@ -45,7 +45,7 @@ struct BeersGateway: BeersGatewayProtocol {
         let response = try jsonDecoder.decode([Beer].self, from: data)
         return Result.success(response)
       } catch let error {
-        return Result.fail(ServiceError.unknown(error.localizedDescription))
+        return Result.fail(ServiceError.unexpected(error))
       }
     } else {
       return Result.fail(ServiceError.couldNotParseResponse)
