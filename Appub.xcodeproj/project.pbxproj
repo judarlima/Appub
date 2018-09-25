@@ -14,7 +14,6 @@
 		E22B45D421583AD8006B318B /* BeersInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D321583AD8006B318B /* BeersInteractor.swift */; };
 		E22B45D621584655006B318B /* BeerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D521584655006B318B /* BeerDetailViewController.swift */; };
 		E22B45DE21585573006B318B /* BeersViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45DD21585573006B318B /* BeersViewRouter.swift */; };
-		E22B45ED2158954E006B318B /* AppubUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45EC2158954E006B318B /* AppubUnitTests.swift */; };
 		E22B45F6215895A0006B318B /* BeersInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45F5215895A0006B318B /* BeersInteractorTests.swift */; };
 		E2CA56FD21569C43005D2925 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA56FC21569C43005D2925 /* AppDelegate.swift */; };
 		E2CA570421569C44005D2925 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2CA570321569C44005D2925 /* Assets.xcassets */; };
@@ -53,7 +52,6 @@
 		E22B45D521584655006B318B /* BeerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerDetailViewController.swift; sourceTree = "<group>"; };
 		E22B45DD21585573006B318B /* BeersViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeersViewRouter.swift; sourceTree = "<group>"; };
 		E22B45EA2158954E006B318B /* AppubUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppubUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E22B45EC2158954E006B318B /* AppubUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppubUnitTests.swift; sourceTree = "<group>"; };
 		E22B45EE2158954E006B318B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E22B45F5215895A0006B318B /* BeersInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeersInteractorTests.swift; sourceTree = "<group>"; };
 		E2CA56F921569C43005D2925 /* Appub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Appub.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,7 +136,6 @@
 			isa = PBXGroup;
 			children = (
 				E22B45F42158955A006B318B /* Interactors */,
-				E22B45EC2158954E006B318B /* AppubUnitTests.swift */,
 				E22B45EE2158954E006B318B /* Info.plist */,
 			);
 			path = AppubUnitTests;
@@ -401,7 +398,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E22B45F6215895A0006B318B /* BeersInteractorTests.swift in Sources */,
-				E22B45ED2158954E006B318B /* AppubUnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

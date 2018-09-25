@@ -34,15 +34,6 @@ class BeerDetailViewController: UIViewController {
   
   override func viewDidLoad() {
     NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-    setupScrollView()
   }
   
-  private func setupScrollView() {
-    let scrollSize = CGSize(width: self.view.frame.size.width,
-                            height: self.view.frame.size.height)
-    scrollView.contentSize = scrollSize
-    scrollView.isDirectionalLockEnabled = true
-//    scrollView.contentLayoutGuide.bottomAnchor.constraint(equalTo: descriptionLabel.bottomAnchor).isActive = true
-
-  }
 }
