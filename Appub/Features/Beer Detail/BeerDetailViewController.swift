@@ -18,6 +18,7 @@ class BeerDetailViewController: UIViewController {
   @IBOutlet private weak var abvLabel: UILabel!
   @IBOutlet private weak var ibuLabel: UILabel!
   @IBOutlet private weak var descriptionLabel: UILabel!
+  @IBOutlet weak var scrollView: UIScrollView!
   
   lazy var activityData = ActivityData()
   
@@ -33,5 +34,15 @@ class BeerDetailViewController: UIViewController {
   
   override func viewDidLoad() {
     NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+    setupScrollView()
+  }
+  
+  private func setupScrollView() {
+    let scrollSize = CGSize(width: self.view.frame.size.width,
+                            height: self.view.frame.size.height)
+    scrollView.contentSize = scrollSize
+    scrollView.isDirectionalLockEnabled = true
+//    scrollView.contentLayoutGuide.bottomAnchor.constraint(equalTo: descriptionLabel.bottomAnchor).isActive = true
+
   }
 }
