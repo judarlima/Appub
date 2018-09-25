@@ -26,7 +26,6 @@ class BeersInteractor {
       switch result {
       case let .success(allBeers):
         interactor.allBeers = allBeers
-        interactor.allBeers = allBeers
         let beersViewModel = allBeers.map({ BeerCollectionViewModel(beerImage: $0.imageURL,
                                                                     beerNameLabel: $0.name,
                                                                     beerAbvLabel: String($0.abv)) })
