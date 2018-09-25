@@ -66,7 +66,7 @@ extension BeerListViewController: UICollectionViewDelegate {
     NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
     DispatchQueue.main.async { [weak self] in
       guard let controller = self else { return }
-      let beerId = allBeers[indexPath.row].id
+      let beerId = controller.allBeers[indexPath.row].id
       controller.interactor.beer(id: beerId)
     }
   }
