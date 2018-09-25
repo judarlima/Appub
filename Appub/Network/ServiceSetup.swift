@@ -12,7 +12,7 @@ struct API {
 
 enum BeersGatewaySetup: ServiceSetup {
   case allBeers
-  case singleBeer(id: Int)
+  case singleBeer(id: String)
   
   var endpoint: String {
     switch self {
