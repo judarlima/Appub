@@ -19,7 +19,7 @@ struct BeersGateway: BeersGatewayProtocol {
     }
   }
   
-  func getBeer(with id: Int, completion: @escaping (Result<Beer>) -> Void) {
+  func getBeer(with id: String, completion: @escaping (Result<Beer>) -> Void) {
     service.requestData(with: BeersGatewaySetup.singleBeer(id: id)) { (responseData, responseError) in
       let result = self.generateResult(responseData: responseData, responseError: responseError)
       switch result {
