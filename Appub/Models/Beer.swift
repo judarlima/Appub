@@ -29,3 +29,16 @@ extension Beer: Decodable {
     ibu = try values.decode(Double?.self, forKey: .ibu)
   }
 }
+
+extension Beer: Equatable {
+    
+    static func == (lhs: Beer, rhs: Beer) -> Bool {
+        return lhs.id == rhs.id &&
+        lhs.name == rhs.name &&
+        lhs.tagline == rhs.tagline &&
+        lhs.description == rhs.description &&
+        lhs.imageURL == rhs.imageURL &&
+        lhs.abv == rhs.abv &&
+        lhs.ibu == rhs.ibu
+    }
+}

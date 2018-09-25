@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		155D2A33469FFD7DCEBD9713 /* Pods_Appub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5548DCAD7D29363C358BE071 /* Pods_Appub.framework */; };
+		426367C3215AB17800879143 /* BeerGatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426367C2215AB17800879143 /* BeerGatewayTests.swift */; };
+		426367C6215AB46400879143 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426367C5215AB46400879143 /* TestHelper.swift */; };
+		426367C8215AB56E00879143 /* beer.json in Resources */ = {isa = PBXBuildFile; fileRef = 426367C7215AB56E00879143 /* beer.json */; };
 		544E4D347B58F1A23B725D8C /* Pods_AppubUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DA3279CBE1559462CF4E4 /* Pods_AppubUnitTests.framework */; };
 		E22B45CF215837ED006B318B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45CE215837ED006B318B /* Result.swift */; };
 		E22B45D121583822006B318B /* ServiceSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D021583822006B318B /* ServiceSetup.swift */; };
@@ -43,6 +46,9 @@
 
 /* Begin PBXFileReference section */
 		13FC7ACF9B4E03907A246045 /* Pods-Appub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appub.release.xcconfig"; path = "Pods/Target Support Files/Pods-Appub/Pods-Appub.release.xcconfig"; sourceTree = "<group>"; };
+		426367C2215AB17800879143 /* BeerGatewayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerGatewayTests.swift; sourceTree = "<group>"; };
+		426367C5215AB46400879143 /* TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
+		426367C7215AB56E00879143 /* beer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = beer.json; sourceTree = "<group>"; };
 		4BFA742D6425E5440C4401C5 /* Pods-AppubTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppubTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppubTests/Pods-AppubTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5548DCAD7D29363C358BE071 /* Pods_Appub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Appub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63983CB02D2F6ECA686018C7 /* Pods-AppubUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppubUnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppubUnitTests/Pods-AppubUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -97,6 +103,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		426367C0215AB14A00879143 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		426367C1215AB15300879143 /* Gateway */ = {
+			isa = PBXGroup;
+			children = (
+				426367C2215AB17800879143 /* BeerGatewayTests.swift */,
+			);
+			path = Gateway;
+			sourceTree = "<group>";
+		};
+		426367C4215AB2AD00879143 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		7C8D3D527E69C63A7B94C9E9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,19 +169,23 @@
 		E22B45EB2158954E006B318B /* AppubUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				426367C4215AB2AD00879143 /* Service */,
+				426367C1215AB15300879143 /* Gateway */,
+				426367C0215AB14A00879143 /* Router */,
 				E25DD8BF2159FA6F00717172 /* Mocks */,
-				E22B45F42158955A006B318B /* Interactors */,
+				E22B45F42158955A006B318B /* Interactor */,
 				E22B45EE2158954E006B318B /* Info.plist */,
+				426367C5215AB46400879143 /* TestHelper.swift */,
 			);
 			path = AppubUnitTests;
 			sourceTree = "<group>";
 		};
-		E22B45F42158955A006B318B /* Interactors */ = {
+		E22B45F42158955A006B318B /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
 				E22B45F5215895A0006B318B /* BeersInteractorTests.swift */,
 			);
-			path = Interactors;
+			path = Interactor;
 			sourceTree = "<group>";
 		};
 		E25DD8BF2159FA6F00717172 /* Mocks */ = {
@@ -240,6 +272,7 @@
 		E2CA573521573FB7005D2925 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				426367C7215AB56E00879143 /* beer.json */,
 				E2CA570821569C44005D2925 /* Info.plist */,
 				E2CA56FC21569C43005D2925 /* AppDelegate.swift */,
 				E2CA570321569C44005D2925 /* Assets.xcassets */,
@@ -339,6 +372,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				426367C8215AB56E00879143 /* beer.json in Resources */,
 				E2CA572021569CA2005D2925 /* BeerList.storyboard in Resources */,
 				E2CA57292156EF0F005D2925 /* BeerDetail.storyboard in Resources */,
 				E2CA570721569C44005D2925 /* LaunchScreen.storyboard in Resources */,
@@ -417,6 +451,8 @@
 				E25DD8C52159FB3600717172 /* BeerRouterMock.swift in Sources */,
 				E25DD8C32159FADE00717172 /* BeerPresenterMock.swift in Sources */,
 				E25DD8C12159FA8F00717172 /* BeerGatewayMock.swift in Sources */,
+				426367C6215AB46400879143 /* TestHelper.swift in Sources */,
+				426367C3215AB17800879143 /* BeerGatewayTests.swift in Sources */,
 				E22B45F6215895A0006B318B /* BeersInteractorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
