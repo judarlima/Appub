@@ -3,7 +3,7 @@ import Foundation
 
 class BeerGatewayMock: BeersGatewayProtocol {
   var isFailure = false
-  var expectedIndex = 0
+    var expectedId: String = ""
   
   func getAllBeers(completion: @escaping (Result<[Beer]>) -> Void) {
     if isFailure {
@@ -13,8 +13,8 @@ class BeerGatewayMock: BeersGatewayProtocol {
     }
   }
   
-  func getBeer(with id: Int, completion: @escaping (Result<Beer>) -> Void) {
-    expectedIndex = id
+  func getBeer(with id: String, completion: @escaping (Result<Beer>) -> Void) {
+    expectedId = id
     if isFailure {
       completion(Result.fail(.couldNotFoundURL))
     } else {

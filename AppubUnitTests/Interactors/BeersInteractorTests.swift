@@ -33,19 +33,18 @@ class BeersInteractorTests: XCTestCase {
   }
   
   func testGetBeerWithSuccess() {
-    let currentIndex = 10
-    let expectedIndex = 11
+    let beerId = "10"
     
-    sut.beer(at: currentIndex)
+    sut.beer(with: beerId)
     
     XCTAssertTrue(router.routeToDetailWasCalled)
-    XCTAssertEqual(expectedIndex, gateway.expectedIndex)
+    XCTAssertEqual(beerId, gateway.expectedId)
   }
   
   func testGetBeerWithFailure() {
     gateway.isFailure = true
-    let currentIndex = 10
-    sut.beer(at: currentIndex)
+    let beerId = "22"
+    sut.beer(with: beerId)
     
     XCTAssertTrue(presenter.errorWasPresented)
     XCTAssertFalse(router.routeToDetailWasCalled)
