@@ -67,7 +67,7 @@ extension BeerListViewController: UICollectionViewDelegate {
     DispatchQueue.main.async { [weak self] in
       guard let controller = self else { return }
       let beerId = controller.allBeers[indexPath.row].id
-      controller.interactor.beer(id: beerId)
+      controller.interactor.beer(with: beerId)
     }
   }
 }
