@@ -26,7 +26,8 @@ class BeersInteractor {
       switch result {
       case let .success(allBeers):
         interactor.allBeers = allBeers
-        let beersViewModel = allBeers.map({ BeerCollectionViewModel(beerImage: $0.imageURL,
+        let beersViewModel = allBeers.map({ BeerCollectionViewModel(id: String($0.id)
+                                                                    beerImage: $0.imageURL,
                                                                     beerNameLabel: $0.name,
                                                                     beerAbvLabel: String($0.abv)) })
         interactor.presenter.showBeerList(beers: beersViewModel)
@@ -36,9 +37,8 @@ class BeersInteractor {
     }
   }
   
-  func beer(at index: Int) {
-    let correctIndex = index + 1
-    gateway.getBeer(with: correctIndex) { [weak self] (result) in
+  func beer(with id: String) {
+    gateway.getBeer(with: id) { [weak self] (result) in
       guard let interactor = self else { return }
       switch result {
       case let .success(beer):
