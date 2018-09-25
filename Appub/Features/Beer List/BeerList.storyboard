@@ -43,36 +43,36 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="180" height="135"/>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="VgU-pq-6tb">
-                                                            <rect key="frame" x="0.0" y="140" width="180" height="40"/>
+                                                            <rect key="frame" x="3" y="140" width="174" height="40"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="RU4-Zs-AW8">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="20"/>
-                                                                    <color key="backgroundColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="174" height="20"/>
+                                                                    <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="hxq-Ao-x7O">
-                                                                    <rect key="frame" x="0.0" y="20" width="180" height="20"/>
-                                                                    <color key="backgroundColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <rect key="frame" x="0.0" y="20" width="174" height="20"/>
+                                                                    <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
-                                                            <color key="backgroundColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="DCa-vG-wMy"/>
                                                             </constraints>
                                                         </stackView>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="VgU-pq-6tb" firstAttribute="top" secondItem="xBg-Zb-7tN" secondAttribute="bottom" constant="5" id="Jaa-qO-cWa"/>
-                                                        <constraint firstItem="VgU-pq-6tb" firstAttribute="leading" secondItem="9L1-ob-TnW" secondAttribute="leading" id="VgY-rx-K5W"/>
+                                                        <constraint firstItem="VgU-pq-6tb" firstAttribute="leading" secondItem="9L1-ob-TnW" secondAttribute="leading" constant="3" id="VgY-rx-K5W"/>
                                                         <constraint firstItem="xBg-Zb-7tN" firstAttribute="leading" secondItem="9L1-ob-TnW" secondAttribute="leading" id="Xft-kI-dpc"/>
                                                         <constraint firstAttribute="bottom" secondItem="VgU-pq-6tb" secondAttribute="bottom" id="hNz-mF-fdU"/>
-                                                        <constraint firstAttribute="trailing" secondItem="VgU-pq-6tb" secondAttribute="trailing" id="pJN-cg-pZ4"/>
+                                                        <constraint firstAttribute="trailing" secondItem="VgU-pq-6tb" secondAttribute="trailing" constant="3" id="pJN-cg-pZ4"/>
                                                         <constraint firstAttribute="trailing" secondItem="xBg-Zb-7tN" secondAttribute="trailing" id="xu5-ec-tUx"/>
                                                         <constraint firstItem="xBg-Zb-7tN" firstAttribute="top" secondItem="9L1-ob-TnW" secondAttribute="top" id="zo3-FV-fPw"/>
                                                     </constraints>
