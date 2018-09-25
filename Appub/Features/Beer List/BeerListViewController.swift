@@ -2,6 +2,7 @@ import UIKit
 import NVActivityIndicatorView
 
 struct BeerCollectionViewModel {
+  let id: String
   let beerImage: String
   let beerNameLabel: String
   let beerAbvLabel: String
@@ -65,7 +66,8 @@ extension BeerListViewController: UICollectionViewDelegate {
     NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
     DispatchQueue.main.async { [weak self] in
       guard let controller = self else { return }
-      controller.interactor.beer(at: indexPath.row)
+      let beerId = allBeers[indexPath.row].id
+      controller.interactor.beer(id: beerId)
     }
   }
 }
