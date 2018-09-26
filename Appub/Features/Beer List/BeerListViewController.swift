@@ -50,14 +50,14 @@ extension BeerListViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BeerCollectionViewCell",
-                                                            for: indexPath) as? BeerCollectionViewCell
-          else {
-            return UICollectionViewCell()
-        }
-        let beerForIndex = allBeers[indexPath.row]
-        cell.bind(viewModel: beerForIndex)
-        return cell
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BeerCollectionViewCell",
+                                                        for: indexPath) as? BeerCollectionViewCell
+      else {
+        return UICollectionViewCell()
+    }
+    let beerForIndex = allBeers[indexPath.row]
+    cell.bind(viewModel: beerForIndex)
+    return cell
   }
 }
 

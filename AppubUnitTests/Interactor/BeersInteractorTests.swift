@@ -16,14 +16,14 @@ class BeersInteractorTests: XCTestCase {
     sut = BeersInteractor(gateway: gateway, presenter: presenter, router: router)
   }
   
-  func testBeerListWithSuccessResult() {
+  func testGetBeerListWhenGatewayReturnsSucessResultThenPresentBeerList() {
     sut.beerList()
     
     XCTAssertTrue(presenter.beerListWasPresented)
     XCTAssertFalse(presenter.errorWasPresented)
   }
   
-  func testBeerListWithFailResult() {
+  func testGetBeerListWhenGatewayReturnsFailResultThenPresentError() {
     gateway.isFailure = true
     
     sut.beerList()
@@ -32,7 +32,7 @@ class BeersInteractorTests: XCTestCase {
     XCTAssertFalse(presenter.beerListWasPresented)
   }
   
-  func testGetBeerWithSuccess() {
+  func testGetBeerWhenGatewayReturnsSuccessResultThenRouteToDetail() {
     let beerId = "10"
     
     sut.beer(with: beerId)
@@ -41,7 +41,7 @@ class BeersInteractorTests: XCTestCase {
     XCTAssertEqual(beerId, gateway.expectedId)
   }
   
-  func testGetBeerWithFailure() {
+  func testGetBeerWhenGatewayReturnsFailResultThenPresentError() {
     gateway.isFailure = true
     let beerId = "22"
     sut.beer(with: beerId)
