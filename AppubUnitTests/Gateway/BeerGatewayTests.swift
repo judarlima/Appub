@@ -11,8 +11,8 @@ class BeerGatewayTests: XCTestCase {
     sut = BeersGateway(service: service)
   }
   
-  func testGetAllBeersWithSuccess() {
-    let expectedBeers = createBeerList()
+  func testGetAllBeersSuccessWhenServiceReturnJsonData() {
+    let expectedBeers = TestHelper.createBeerList()
     
     sut.getAllBeers { (result) in
       switch result {
@@ -22,7 +22,7 @@ class BeerGatewayTests: XCTestCase {
     }
   }
   
-  func testGetAllBeersWithFailure() {
+  func testGetAllBeersFailWhenServiceReturnServiceError() {
     service.isFailure = true
     let errorMessage = "The operation couldn’t be completed. (Appub.ServiceError error 0.)"
     
@@ -36,8 +36,8 @@ class BeerGatewayTests: XCTestCase {
     }
   }
   
-  func testGetBeerWithSucces() {
-    let expectedBeer = createBeerList().first!
+  func testGetBeerSuccessWhenServiceReturnJsonData() {
+    let expectedBeer = TestHelper.createBeerList().first!
     let beerId = "5"
     
     sut.getBeer(with: beerId) { (result) in
@@ -48,7 +48,7 @@ class BeerGatewayTests: XCTestCase {
     }
   }
   
-  func testGetBeerWithFailure() {
+  func testGetBeerFailWhenServiceReturnServiceError() {
     service.isFailure = true
     let beerId = "5"
     let errorMessage = "The operation couldn’t be completed. (Appub.ServiceError error 0.)"
@@ -61,18 +61,5 @@ class BeerGatewayTests: XCTestCase {
       default: XCTFail("Could not validate fail result.")
       }
     }
-  }
-  
-  private func createBeerList() -> [Beer] {
-    return [Beer(id: 5,
-                 name: "Avery Brown Dredge",
-                 tagline: "Bloggers' Imperial Pilsner.",
-                 description: "An Imperial Pilsner in collaboration with beer writers. Tradition. Homage." +
-                  " Revolution. We wanted to showcase the awesome backbone of the Czech brewing tradition," +
-                  " the noble Saaz hop, and also tip our hats to the modern beers that rock our world, " +
-      "and the people who make them.",
-                 imageURL: "https://images.punkapi.com/v2/5.png",
-                 abv: 7.2,
-                 ibu: 59.0)]
   }
 }
