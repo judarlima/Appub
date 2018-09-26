@@ -9,7 +9,6 @@ protocol BeersListPresenter {
 class BeersInteractor {
   private let gateway: BeersGatewayProtocol
   private let presenter: BeersListPresenter
-  private var allBeers: [Beer] = []
   private var router: BeerListRouterProtocol
   
   init(gateway: BeersGatewayProtocol,
@@ -25,7 +24,6 @@ class BeersInteractor {
       guard let interactor = self else { return }
       switch result {
       case let .success(allBeers):
-        interactor.allBeers = allBeers
         let beersViewModel = allBeers.map({ BeerCollectionViewModel(id: String($0.id),
                                                                     beerImage: $0.imageURL,
                                                                     beerNameLabel: $0.name,
