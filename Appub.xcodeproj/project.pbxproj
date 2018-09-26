@@ -12,6 +12,7 @@
 		426367C6215AB46400879143 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426367C5215AB46400879143 /* TestHelper.swift */; };
 		426367C8215AB56E00879143 /* beer.json in Resources */ = {isa = PBXBuildFile; fileRef = 426367C7215AB56E00879143 /* beer.json */; };
 		544E4D347B58F1A23B725D8C /* Pods_AppubUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DA3279CBE1559462CF4E4 /* Pods_AppubUnitTests.framework */; };
+		E206F3DC215B08CB002F5F61 /* ServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E206F3DB215B08CB002F5F61 /* ServiceMock.swift */; };
 		E22B45CF215837ED006B318B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45CE215837ED006B318B /* Result.swift */; };
 		E22B45D121583822006B318B /* ServiceSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D021583822006B318B /* ServiceSetup.swift */; };
 		E22B45D421583AD8006B318B /* BeersInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B45D321583AD8006B318B /* BeersInteractor.swift */; };
@@ -55,6 +56,7 @@
 		B20DA3279CBE1559462CF4E4 /* Pods_AppubUnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppubUnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B69BFFBC65E7195303AD6706 /* Pods-AppubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppubTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppubTests/Pods-AppubTests.release.xcconfig"; sourceTree = "<group>"; };
 		C313FA85CE1FAA39A5B1EE13 /* Pods-Appub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appub.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Appub/Pods-Appub.debug.xcconfig"; sourceTree = "<group>"; };
+		E206F3DB215B08CB002F5F61 /* ServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceMock.swift; sourceTree = "<group>"; };
 		E22B45CE215837ED006B318B /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		E22B45D021583822006B318B /* ServiceSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSetup.swift; sourceTree = "<group>"; };
 		E22B45D321583AD8006B318B /* BeersInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeersInteractor.swift; sourceTree = "<group>"; };
@@ -103,26 +105,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		426367C0215AB14A00879143 /* Router */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Router;
-			sourceTree = "<group>";
-		};
 		426367C1215AB15300879143 /* Gateway */ = {
 			isa = PBXGroup;
 			children = (
 				426367C2215AB17800879143 /* BeerGatewayTests.swift */,
 			);
 			path = Gateway;
-			sourceTree = "<group>";
-		};
-		426367C4215AB2AD00879143 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		7C8D3D527E69C63A7B94C9E9 /* Frameworks */ = {
@@ -169,9 +157,7 @@
 		E22B45EB2158954E006B318B /* AppubUnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				426367C4215AB2AD00879143 /* Service */,
 				426367C1215AB15300879143 /* Gateway */,
-				426367C0215AB14A00879143 /* Router */,
 				E25DD8BF2159FA6F00717172 /* Mocks */,
 				E22B45F42158955A006B318B /* Interactor */,
 				E22B45EE2158954E006B318B /* Info.plist */,
@@ -194,6 +180,7 @@
 				E25DD8C02159FA8F00717172 /* BeerGatewayMock.swift */,
 				E25DD8C22159FADE00717172 /* BeerPresenterMock.swift */,
 				E25DD8C42159FB3600717172 /* BeerRouterMock.swift */,
+				E206F3DB215B08CB002F5F61 /* ServiceMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -454,6 +441,7 @@
 				426367C6215AB46400879143 /* TestHelper.swift in Sources */,
 				426367C3215AB17800879143 /* BeerGatewayTests.swift in Sources */,
 				E22B45F6215895A0006B318B /* BeersInteractorTests.swift in Sources */,
+				E206F3DC215B08CB002F5F61 /* ServiceMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,7 +501,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.raduj.AppubUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Appub.app/Appub";
 			};
 			name = Debug;
@@ -533,7 +521,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.raduj.AppubUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Appub.app/Appub";
 			};
 			name = Release;
