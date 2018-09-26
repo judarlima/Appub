@@ -18,7 +18,7 @@ class BeerDetailViewController: UIViewController {
   @IBOutlet private weak var abvLabel: UILabel!
   @IBOutlet private weak var ibuLabel: UILabel!
   @IBOutlet private weak var descriptionLabel: UILabel!
-  @IBOutlet weak var scrollView: UIScrollView!
+
   
   lazy var activityData = ActivityData()
   
