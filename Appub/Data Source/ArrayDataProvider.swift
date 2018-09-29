@@ -19,16 +19,16 @@ public class ArrayDataProvider<T>: CollectionDataProvider {
     }
     
     public func item(at indexPath: IndexPath) -> T? {
-        guard isNotOutOfBounds(at: indexPath) else { return nil }
+        guard isNotOutOfRange(at: indexPath) else { return nil }
         return items[indexPath.section][indexPath.row]
     }
     
     public func updateItem(at indexPath: IndexPath, value: T) {
-        guard isNotOutOfBounds(at: indexPath) else { return }
+        guard isNotOutOfRange(at: indexPath) else { return }
         items[indexPath.section][indexPath.row] = value
     }
     
-    private func isNotOutOfBounds(at indexPath: IndexPath) -> Bool {
+    private func isNotOutOfRange(at indexPath: IndexPath) -> Bool {
         return (indexPath.section >= 0 &&
             indexPath.section < items.count &&
             indexPath.row >= 0 &&

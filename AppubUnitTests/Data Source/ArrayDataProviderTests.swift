@@ -63,7 +63,7 @@ class ArrayDataProviderTests: XCTestCase {
         XCTAssertEqual(expectedItem, currentItem)
     }
     
-    func testCallItemAtIndexPathWithOutOfBoundIndexThenReturnsNil() {
+    func testCallItemAtIndexPathWithOutOfRangeIndexThenReturnsNil() {
         let beers = [TestHelper.createBeerList()]
         sut = ArrayDataProvider<Beer>(array: beers)
         let indexPath = IndexPath(row: 0, section: 1)
@@ -87,7 +87,7 @@ class ArrayDataProviderTests: XCTestCase {
         XCTAssertNotEqual(expectedValue, initialValue)
     }
     
-    func testCallUpdateItemAtIndexPathWithOutOfBoundIndexThenNotUpdateItemAtIndexPath() {
+    func testCallUpdateItemAtIndexPathWithOutOfRangeIndexThenNotUpdateItemAtIndexPath() {
         let beers = [TestHelper.createBeerList()]
         sut = ArrayDataProvider<Beer>(array: beers)
         let outOfBoundIndexPath = IndexPath(row: 2, section: 3)
