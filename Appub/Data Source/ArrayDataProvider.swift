@@ -1,9 +1,9 @@
 import Foundation
 
-public class ArrayDataProvider<ViewModel>: CollectionDataProvider {
-  var items: [[ViewModel]] = []
+public class ArrayDataProvider<T>: CollectionDataProvider {
+  var items: [[T]] = []
   
-  init(array: [[ViewModel]]) {
+  init(array: [[T]]) {
     items = array
   }
   
@@ -16,12 +16,12 @@ public class ArrayDataProvider<ViewModel>: CollectionDataProvider {
     return items[section].count
   }
   
-  public func item(at indexPath: IndexPath) -> ViewModel? {
+  public func item(at indexPath: IndexPath) -> T? {
     guard isOutOfBounds(indexPath: indexPath) else { return nil }
     return items[indexPath.section][indexPath.row]
   }
   
-  public func updateItem(at indexPath: IndexPath, value: ViewModel) {
+  public func updateItem(at indexPath: IndexPath, value: T) {
     guard isOutOfBounds(indexPath: indexPath) else { return }
     items[indexPath.section][indexPath.row] = value
   }
