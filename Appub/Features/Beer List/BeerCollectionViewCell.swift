@@ -1,7 +1,10 @@
 import UIKit
 import Kingfisher
 
-class BeerCollectionViewCell: UICollectionViewCell {
+class BeerCollectionViewCell: UICollectionViewCell, ConfigurableCell {
+  typealias T = BeerCollectionViewModel
+  
+  
   @IBOutlet private weak var beerImage: UIImageView!
   @IBOutlet private weak var beerNameLabel: UILabel!
   @IBOutlet private weak var beerAbvLabel: UILabel!
@@ -12,13 +15,13 @@ class BeerCollectionViewCell: UICollectionViewCell {
     makeRounded()
   }
   
-  func bind(viewModel: BeerCollectionViewModel) {
-    let imageURL = URL(string: viewModel.beerImage)
+  func configure(_ item: BeerCollectionViewCell.T, at indexPath: IndexPath) {
+    let imageURL = URL(string: item.beerImage)
     beerImage.kf.setImage(with: imageURL)
-    beerNameLabel.text = "name: " + viewModel.beerNameLabel
-    beerAbvLabel.text = "abv: " + viewModel.beerAbvLabel
+    beerNameLabel.text = "name: " + item.beerNameLabel
+    beerAbvLabel.text = "abv: " + item.beerAbvLabel
   }
-  
+    
   private func makeRounded() {
     containerView.layer.cornerRadius = 6
     containerView.layer.masksToBounds = true

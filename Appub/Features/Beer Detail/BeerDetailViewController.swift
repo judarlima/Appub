@@ -1,15 +1,6 @@
 import UIKit
 import NVActivityIndicatorView
 
-struct BeerDetailViewModel {
-  let imageURL: String
-  let name: String
-  let tagline: String
-  let abv: String
-  let ibu: String
-  let description: String
-}
-
 class BeerDetailViewController: UIViewController {
   
   @IBOutlet private weak var beerImage: UIImageView!

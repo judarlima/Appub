@@ -1,16 +1,12 @@
 import UIKit
 import NVActivityIndicatorView
 
-struct BeerCollectionViewModel {
-  let id: String
-  let beerImage: String
-  let beerNameLabel: String
-  let beerAbvLabel: String
-}
-
 class BeerListViewController: UIViewController {
   
   @IBOutlet private weak var collectionView: UICollectionView!
+  
+  private var beersDataSource: BeersDataSource?
+  private var selectedIndexPath: IndexPath? = nil
   
   private var allBeers: [BeerCollectionViewModel] = []
   
@@ -38,52 +34,11 @@ class BeerListViewController: UIViewController {
   }
   
   private func setupView() {
-    collectionView.backgroundColor = .clear
+    collectionView.backgroundColor = .darkGray
     collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
   }
   
 }
-
-extension BeerListViewController: UICollectionViewDataSource {
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return allBeers.count
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BeerCollectionViewCell",
-                                                        for: indexPath) as? BeerCollectionViewCell
-      else {
-        return UICollectionViewCell()
-    }
-    let beerForIndex = allBeers[indexPath.row]
-    cell.bind(viewModel: beerForIndex)
-    return cell
-  }
-}
-
-extension BeerListViewController: UICollectionViewDelegate {
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
-    DispatchQueue.main.async { [weak self] in
-      guard let controller = self else { return }
-      let beerId = controller.allBeers[indexPath.row].id
-      controller.interactor.beer(with: beerId)
-    }
-  }
-}
-
-extension BeerListViewController: UICollectionViewDelegateFlowLayout {
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let contentInset = collectionView.contentInset
-    let rightSpace: CGFloat = 10
-    let itemSize = (collectionView.frame.width - (contentInset.left + contentInset.right + rightSpace)) / 2
-    
-    return CGSize(width: itemSize, height: itemSize)
-  }
-}
-
 
 extension BeerListViewController {
   fileprivate func showAlertMessage(message: String) {
@@ -102,9 +57,15 @@ extension BeerListViewController {
 extension BeerListViewController: BeersListPresenter {
   
   func showBeerList(beers: [BeerCollectionViewModel]) {
-    DispatchQueue.main.async {
-      self.allBeers = beers
-      self.collectionView?.reloadData()
+    DispatchQueue.main.async { [weak self] in
+      guard let controller = self else { return }
+      controller.beersDataSource = BeersDataSource(collectionView: controller.collectionView, array: beers)
+      controller.beersDataSource?.collectionItemSelectionHandler = { [weak self] indexPath in
+        guard let strongSelf = self else { return }
+        strongSelf.selectedIndexPath = indexPath
+        strongSelf.interactor.beer(with: beers[indexPath.row].id)
+      }
+      controller.collectionView?.reloadData()
       NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
     }
   }
