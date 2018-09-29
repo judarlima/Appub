@@ -15,13 +15,13 @@ class BeerCollectionViewCell: UICollectionViewCell, ConfigurableCell {
     makeRounded()
   }
   
-  func configure(_ item: BeerCollectionViewCell.T, at indexPath: IndexPath) {
+  func bind(_ item: BeerCollectionViewCell.T, at indexPath: IndexPath) {
     let imageURL = URL(string: item.beerImage)
     beerImage.kf.setImage(with: imageURL)
     beerNameLabel.text = "name: " + item.beerNameLabel
     beerAbvLabel.text = "abv: " + item.beerAbvLabel
   }
-    
+  
   private func makeRounded() {
     containerView.layer.cornerRadius = 6
     containerView.layer.masksToBounds = true
