@@ -1,9 +1,14 @@
-//
-//  BeersDataSource.swift
-//  Appub
-//
-//  Created by Judar Lima on 9/28/18.
-//  Copyright © 2018 Raduj. All rights reserved.
-//
+import UIKit
 
-import Foundation
+class BeersDataSource: CollectionArrayDataSource<BeerCollectionViewModel, BeerCollectionViewCell>, UICollectionViewDelegateFlowLayout {
+  
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let contentInset = collectionView.contentInset
+    let rightSpace: CGFloat = 10
+    let itemSize = (collectionView.frame.width - (contentInset.left + contentInset.right + rightSpace)) / 2
+    
+    return CGSize(width: itemSize, height: itemSize)
+  }
+}

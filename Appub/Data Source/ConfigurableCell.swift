@@ -1,9 +1,7 @@
-//
-//  ConfigurableCell.swift
-//  Appub
-//
-//  Created by Judar Lima on 9/28/18.
-//  Copyright © 2018 Raduj. All rights reserved.
-//
-
 import Foundation
+
+public protocol ConfigurableCell: ReusableCell {
+  associatedtype T
+  
+  func configure(_ item: T, at indexPath: IndexPath)
+}

@@ -1,9 +1,11 @@
-//
-//  CollectionDataProvider.swift
-//  Appub
-//
-//  Created by Judar Lima on 9/28/18.
-//  Copyright © 2018 Raduj. All rights reserved.
-//
-
 import Foundation
+
+public protocol CollectionDataProvider {
+  associatedtype T
+  
+  func numberOfSections() -> Int
+  func numberOfItems(in section: Int) -> Int
+  func item(at indexPath: IndexPath) -> T?
+  
+  func updateItem(at indexPath: IndexPath, value: T)
+}
