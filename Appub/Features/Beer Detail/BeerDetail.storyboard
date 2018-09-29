@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BrC-xH-8zC">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholderImage" translatesAutoresizingMaskIntoConstraints="NO" id="BrC-xH-8zC">
                                 <rect key="frame" x="20" y="40" width="150" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="j1c-fF-oan"/>
@@ -90,4 +90,7 @@
             <point key="canvasLocation" x="1148" y="-100.29985007496252"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="placeholderImage" width="400" height="400"/>
+    </resources>
 </document>
