@@ -1,13 +1,6 @@
 import UIKit
 import NVActivityIndicatorView
 
-struct BeerCollectionViewModel {
-  let id: String
-  let beerImage: String
-  let beerNameLabel: String
-  let beerAbvLabel: String
-}
-
 class BeerListViewController: UIViewController {
   
   @IBOutlet private weak var collectionView: UICollectionView!

@@ -23,12 +23,11 @@ class BeersInteractor {
     gateway.getAllBeers { [weak self] (result) in
       guard let interactor = self else { return }
       switch result {
+     
       case let .success(allBeers):
-        let beersViewModel = allBeers.map({ BeerCollectionViewModel(id: String($0.id),
-                                                                    beerImage: $0.imageURL,
-                                                                    beerNameLabel: $0.name,
-                                                                    beerAbvLabel: String($0.abv)) })
+        let beersViewModel = allBeers.map(BeerCollectionViewModel.init)
         interactor.presenter.showBeerList(beers: beersViewModel)
+      
       case .fail(let error):
         interactor.presenter.showError(error: error)
       }
@@ -40,15 +39,8 @@ class BeersInteractor {
       guard let interactor = self else { return }
       switch result {
       case let .success(beer):
-        let beerIbu = beer.ibu != nil ? "\(beer.ibu!)" : "N/A"
-        let beerViewModel = BeerDetailViewModel(imageURL: beer.imageURL,
-                                                name: beer.name,
-                                                tagline: beer.tagline,
-                                                abv: "\(beer.abv)",
-          ibu: beerIbu,
-          description: beer.description)
-        
-        interactor.router.routeToBeerDetails(with: beerViewModel)
+        let viewModel = BeerDetailViewModel(beer: beer)
+        interactor.router.routeToBeerDetails(with: viewModel)
       case let .fail(error):
         interactor.presenter.showError(error: error)
       }
