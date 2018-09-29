@@ -5,7 +5,7 @@ open class CollectionDataSource<Provider: CollectionDataProvider, Cell: UICollec
   NSObject,
   UICollectionViewDelegate,
   UICollectionViewDataSource
-where Cell: ConfigurableCell, Provider.ViewModel == Cell.ViewModel {
+where Cell: ConfigurableCell, Provider.T == Cell.T {
   
   public typealias CollectionItemSelectionHandlerType = (IndexPath) -> Void
   

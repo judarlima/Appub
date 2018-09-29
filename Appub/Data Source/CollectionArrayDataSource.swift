@@ -1,7 +1,7 @@
 import UIKit
 
 open class CollectionArrayDataSource<T, Cell: UICollectionViewCell>: CollectionDataSource<ArrayDataProvider<T>, Cell>
-where Cell: ConfigurableCell, Cell.ViewModel == T {
+where Cell: ConfigurableCell, Cell.T == T {
   
   public convenience init(collectionView: UICollectionView, array: [T]) {
     self.init(collectionView: collectionView, array: [array])
