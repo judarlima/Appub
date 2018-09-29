@@ -28,4 +28,14 @@ class TestHelper {
                      abv: 7.2,
                      ibu: 59.0)]
     }
+    
+    static func createBeerItem() -> Beer {
+        return Beer(id: 30,
+                    name: "shu",
+                    tagline: "sha",
+                    description: "lorem",
+                    imageURL: "ipsum",
+                    abv: 9.5,
+                    ibu: 3.8)
+    }
 }
