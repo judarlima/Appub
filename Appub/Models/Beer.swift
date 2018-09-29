@@ -1,44 +1,44 @@
 import Foundation
 
 struct Beer {
-    let id: Int
-    let name, tagline, description: String
-    let imageURL: String
-    let abv: Double
-    let ibu: Double?
+  let id: Int
+  let name, tagline, description: String
+  let imageURL: String
+  let abv: Double
+  let ibu: Double?
 }
 
 extension Beer: Decodable {
-    enum CodingKeys: String, CodingKey {
-        case id, name, tagline
-        case description
-        case imageURL = "image_url"
-        case abv
-        case ibu
-    }
+  enum CodingKeys: String, CodingKey {
+    case id, name, tagline
+    case description
+    case imageURL = "image_url"
+    case abv
+    case ibu
+  }
+  
+  init(from decoder: Decoder) throws {
+    let values = try decoder.container(keyedBy: CodingKeys.self)
     
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        
-        id = try values.decode(Int.self, forKey: .id)
-        name = try values.decode(String.self, forKey: .name)
-        tagline = try values.decode(String.self, forKey: .tagline)
-        description = try values.decode(String.self, forKey: .description)
-        imageURL = try values.decode(String.self, forKey: .imageURL)
-        abv = try values.decode(Double.self, forKey: .abv)
-        ibu = try values.decode(Double?.self, forKey: .ibu)
-    }
+    id = try values.decode(Int.self, forKey: .id)
+    name = try values.decode(String.self, forKey: .name)
+    tagline = try values.decode(String.self, forKey: .tagline)
+    description = try values.decode(String.self, forKey: .description)
+    imageURL = try values.decode(String.self, forKey: .imageURL)
+    abv = try values.decode(Double.self, forKey: .abv)
+    ibu = try values.decode(Double?.self, forKey: .ibu)
+  }
 }
 
 extension Beer: Equatable {
     
     static func == (lhs: Beer, rhs: Beer) -> Bool {
         return lhs.id == rhs.id &&
-            lhs.name == rhs.name &&
-            lhs.tagline == rhs.tagline &&
-            lhs.description == rhs.description &&
-            lhs.imageURL == rhs.imageURL &&
-            lhs.abv == rhs.abv &&
-            lhs.ibu == rhs.ibu
+        lhs.name == rhs.name &&
+        lhs.tagline == rhs.tagline &&
+        lhs.description == rhs.description &&
+        lhs.imageURL == rhs.imageURL &&
+        lhs.abv == rhs.abv &&
+        lhs.ibu == rhs.ibu
     }
 }
