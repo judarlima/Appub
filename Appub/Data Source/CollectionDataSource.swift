@@ -5,16 +5,14 @@ open class CollectionDataSource<Provider: CollectionDataProvider, Cell: UICollec
   NSObject,
   UICollectionViewDelegate,
   UICollectionViewDataSource
-where Cell: ConfigurableCell, Provider.T == Cell.T {
+where Cell: ConfigurableCell, Provider.ViewModel == Cell.ViewModel {
   
   public typealias CollectionItemSelectionHandlerType = (IndexPath) -> Void
   
-  // MARK: - Properties
   let provider: Provider
   private let collectionView: UICollectionView
   private lazy var activityData = ActivityData()
   
-  // MARK: - Lifecycle
   init(collectionView: UICollectionView, provider: Provider) {
     self.collectionView = collectionView
     self.provider = provider
@@ -27,7 +25,6 @@ where Cell: ConfigurableCell, Provider.T == Cell.T {
     collectionView.delegate = self
   }
   
-  // MARK: - UICollectionViewDataSource
   public func numberOfSections(in collectionView: UICollectionView) -> Int {
     return provider.numberOfSections()
   }
@@ -36,7 +33,6 @@ where Cell: ConfigurableCell, Provider.T == Cell.T {
     return provider.numberOfItems(in: section)
   }
   
-  //Setted as open in case any subclass requires more customization during the cell content initialization phase.
   open func collectionView(_ collectionView: UICollectionView,
                            cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.reuseIdentifier,
@@ -50,10 +46,8 @@ where Cell: ConfigurableCell, Provider.T == Cell.T {
     return cell
   }
   
-  // MARK: - Delegates
   public var collectionItemSelectionHandler: CollectionItemSelectionHandlerType?
   
-  // MARK: - UICollectionViewDelegate
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
       collectionItemSelectionHandler?(indexPath)

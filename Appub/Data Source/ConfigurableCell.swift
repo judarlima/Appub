@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol ConfigurableCell: ReusableCell {
-  associatedtype T
+  associatedtype ViewModel
   
-  func bind(_ item: T, at indexPath: IndexPath)
+  func bind(_ item: ViewModel, at indexPath: IndexPath)
 }
