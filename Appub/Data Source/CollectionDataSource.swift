@@ -45,7 +45,7 @@ where Cell: ConfigurableCell, Provider.T == Cell.T {
     }
     let item = provider.item(at: indexPath)
     if let item = item {
-      cell.configure(item, at: indexPath)
+      cell.bind(item, at: indexPath)
     }
     return cell
   }
