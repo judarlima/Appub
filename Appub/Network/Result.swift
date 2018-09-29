@@ -1,6 +1,6 @@
 import Foundation
 
 public enum Result<T> {
-  case success(T)
-  case fail(ServiceError?)
+    case success(T)
+    case fail(ServiceError?)
 }
