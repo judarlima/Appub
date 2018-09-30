@@ -3,7 +3,7 @@ import Kingfisher
 
 protocol BeersListPresenter: class {
     func showBeerList(beers: [BeerCollectionViewModel])
-    func showError(error: Error?)
+    func showError(error: String)
 }
 
 class BeersInteractor {
@@ -29,7 +29,7 @@ class BeersInteractor {
                 interactor.presenter?.showBeerList(beers: beersViewModel)
                 
             case .fail(let error):
-                interactor.presenter?.showError(error: error)
+                interactor.presenter?.showError(error: error?.localizedDescription ?? "")
             }
         }
     }
@@ -42,7 +42,7 @@ class BeersInteractor {
                 let viewModel = BeerDetailViewModel(beer: beer)
                 interactor.router.routeToBeerDetails(with: viewModel)
             case let .fail(error):
-                interactor.presenter?.showError(error: error)
+                interactor.presenter?.showError(error: error?.localizedDescription ?? "")
             }
         }
     }

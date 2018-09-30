@@ -48,6 +48,10 @@ class BeerGatewayTests: XCTestCase {
         }
     }
     
+    func testGetBeerWithEmptyBeerArrayThenReturServiceError() {
+        
+    }
+    
     func testGetBeerFailWhenServiceReturnServiceError() {
         service.isFailure = true
         let beerId = "5"

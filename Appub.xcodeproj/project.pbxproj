@@ -32,6 +32,7 @@
 		E25DD8C12159FA8F00717172 /* BeerGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25DD8C02159FA8F00717172 /* BeerGatewayMock.swift */; };
 		E25DD8C32159FADE00717172 /* BeerPresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25DD8C22159FADE00717172 /* BeerPresenterMock.swift */; };
 		E25DD8C52159FB3600717172 /* BeerRouterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25DD8C42159FB3600717172 /* BeerRouterMock.swift */; };
+		E28B7D4121610BC800CF2072 /* AppubUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28B7D4021610BC800CF2072 /* AppubUITests.swift */; };
 		E2CA56FD21569C43005D2925 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA56FC21569C43005D2925 /* AppDelegate.swift */; };
 		E2CA570421569C44005D2925 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2CA570321569C44005D2925 /* Assets.xcassets */; };
 		E2CA570721569C44005D2925 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CA570521569C44005D2925 /* LaunchScreen.storyboard */; };
@@ -47,6 +48,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		E22B45EF2158954E006B318B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2CA56F121569C43005D2925 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E2CA56F821569C43005D2925;
+			remoteInfo = Appub;
+		};
+		E28B7D4321610BC800CF2072 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E2CA56F121569C43005D2925 /* Project object */;
 			proxyType = 1;
@@ -88,6 +96,9 @@
 		E25DD8C02159FA8F00717172 /* BeerGatewayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerGatewayMock.swift; sourceTree = "<group>"; };
 		E25DD8C22159FADE00717172 /* BeerPresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerPresenterMock.swift; sourceTree = "<group>"; };
 		E25DD8C42159FB3600717172 /* BeerRouterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerRouterMock.swift; sourceTree = "<group>"; };
+		E28B7D3E21610BC800CF2072 /* AppubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E28B7D4021610BC800CF2072 /* AppubUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppubUITests.swift; sourceTree = "<group>"; };
+		E28B7D4221610BC800CF2072 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2CA56F921569C43005D2925 /* Appub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Appub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CA56FC21569C43005D2925 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2CA570321569C44005D2925 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,6 +122,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				544E4D347B58F1A23B725D8C /* Pods_AppubUnitTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E28B7D3B21610BC800CF2072 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,11 +245,21 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		E28B7D3F21610BC800CF2072 /* AppubUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E28B7D4021610BC800CF2072 /* AppubUITests.swift */,
+				E28B7D4221610BC800CF2072 /* Info.plist */,
+			);
+			path = AppubUITests;
+			sourceTree = "<group>";
+		};
 		E2CA56F021569C43005D2925 = {
 			isa = PBXGroup;
 			children = (
 				E2CA56FB21569C43005D2925 /* Appub */,
 				E22B45EB2158954E006B318B /* AppubUnitTests */,
+				E28B7D3F21610BC800CF2072 /* AppubUITests */,
 				E2CA56FA21569C43005D2925 /* Products */,
 				D9A653F521F76F78E9989303 /* Pods */,
 				7C8D3D527E69C63A7B94C9E9 /* Frameworks */,
@@ -243,6 +271,7 @@
 			children = (
 				E2CA56F921569C43005D2925 /* Appub.app */,
 				E22B45EA2158954E006B318B /* AppubUnitTests.xctest */,
+				E28B7D3E21610BC800CF2072 /* AppubUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -336,6 +365,24 @@
 			productReference = E22B45EA2158954E006B318B /* AppubUnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		E28B7D3D21610BC800CF2072 /* AppubUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E28B7D4721610BC800CF2072 /* Build configuration list for PBXNativeTarget "AppubUITests" */;
+			buildPhases = (
+				E28B7D3A21610BC800CF2072 /* Sources */,
+				E28B7D3B21610BC800CF2072 /* Frameworks */,
+				E28B7D3C21610BC800CF2072 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E28B7D4421610BC800CF2072 /* PBXTargetDependency */,
+			);
+			name = AppubUITests;
+			productName = AppubUITests;
+			productReference = E28B7D3E21610BC800CF2072 /* AppubUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		E2CA56F821569C43005D2925 /* Appub */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2CA571621569C45005D2925 /* Build configuration list for PBXNativeTarget "Appub" */;
@@ -361,12 +408,16 @@
 		E2CA56F121569C43005D2925 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
+				LastSwiftUpdateCheck = 1000;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Raduj;
 				TargetAttributes = {
 					E22B45E92158954E006B318B = {
 						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = E2CA56F821569C43005D2925;
+					};
+					E28B7D3D21610BC800CF2072 = {
+						CreatedOnToolsVersion = 10.0;
 						TestTargetID = E2CA56F821569C43005D2925;
 					};
 					E2CA56F821569C43005D2925 = {
@@ -389,12 +440,20 @@
 			targets = (
 				E2CA56F821569C43005D2925 /* Appub */,
 				E22B45E92158954E006B318B /* AppubUnitTests */,
+				E28B7D3D21610BC800CF2072 /* AppubUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E22B45E82158954E006B318B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E28B7D3C21610BC800CF2072 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -492,6 +551,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E28B7D3A21610BC800CF2072 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E28B7D4121610BC800CF2072 /* AppubUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E2CA56F521569C43005D2925 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -527,6 +594,11 @@
 			isa = PBXTargetDependency;
 			target = E2CA56F821569C43005D2925 /* Appub */;
 			targetProxy = E22B45EF2158954E006B318B /* PBXContainerItemProxy */;
+		};
+		E28B7D4421610BC800CF2072 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E2CA56F821569C43005D2925 /* Appub */;
+			targetProxy = E28B7D4321610BC800CF2072 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -579,6 +651,47 @@
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Appub.app/Appub";
+			};
+			name = Release;
+		};
+		E28B7D4521610BC800CF2072 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AppubUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.raduj.AppubUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Appub;
+			};
+			name = Debug;
+		};
+		E28B7D4621610BC800CF2072 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AppubUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.raduj.AppubUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Appub;
 			};
 			name = Release;
 		};
@@ -740,6 +853,15 @@
 			buildConfigurations = (
 				E22B45F22158954E006B318B /* Debug */,
 				E22B45F32158954E006B318B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E28B7D4721610BC800CF2072 /* Build configuration list for PBXNativeTarget "AppubUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E28B7D4521610BC800CF2072 /* Debug */,
+				E28B7D4621610BC800CF2072 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

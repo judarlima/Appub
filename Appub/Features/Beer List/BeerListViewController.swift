@@ -29,6 +29,7 @@ class BeerListViewController: UIViewController {
     }
     
     private func setupView() {
+        collectionView.accessibilityIdentifier = "BeersListView"
         collectionView.backgroundColor = .darkGray
         collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
     }
@@ -65,7 +66,7 @@ extension BeerListViewController: BeersListPresenter {
         }
     }
     
-    func showError(error: Error?) {
-        self.showAlertMessage(message: error?.localizedDescription ?? "Erro Desconhecido.")
+    func showError(error: String) {
+        self.showAlertMessage(message: error)
     }
 }

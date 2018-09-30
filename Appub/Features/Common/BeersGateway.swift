@@ -15,40 +15,48 @@ struct BeersGateway: BeersGatewayProtocol {
     
     func getAllBeers(completion: @escaping (Result<[Beer]>) -> Void) {
         service.requestData(with: BeersGatewaySetup.allBeers) { (responseData, responseError) in
-            completion(self.generateResult(responseData: responseData, responseError: responseError))
+            self.generateResult(responseData: responseData, responseError: responseError, completion: { (result, error) in
+                if let beers = result {
+                    completion(Result.success(beers))
+                } else {
+                    completion(Result.fail(error))
+                }
+            })
         }
     }
     
     func getBeer(with id: String, completion: @escaping (Result<Beer>) -> Void) {
         service.requestData(with: BeersGatewaySetup.singleBeer(id: id)) { (responseData, responseError) in
-            let result = self.generateResult(responseData: responseData, responseError: responseError)
-            switch result {
-            case let .success(beerArray):
+            self.generateResult(responseData: responseData, responseError: responseError, completion: { (result, error) in
+                guard let beerArray = result
+                    else {
+                        completion(Result.fail(error))
+                        return
+                }
                 guard let beer = beerArray.first
                     else {
                         completion(Result.fail(ServiceError.couldNotParseResponse))
                         return
                 }
                 completion(Result.success(beer))
-            case let .fail(error): completion(Result.fail(error))
-            }
+            })
         }
     }
     
-    private func generateResult(responseData: Data?, responseError: ServiceError?) -> Result<[Beer]> {
+    private func generateResult(responseData: Data?, responseError: ServiceError?, completion: @escaping ([Beer]?, ServiceError?) -> Void ) {
         if let error = responseError {
-            return Result.fail(ServiceError.unexpected(error))
+            completion(nil, ServiceError.unexpected(error))
         }
         else if let data = responseData {
             do {
                 let jsonDecoder = JSONDecoder()
                 let response = try jsonDecoder.decode([Beer].self, from: data)
-                return Result.success(response)
+                completion(response, nil)
             } catch let error {
-                return Result.fail(ServiceError.unexpected(error))
+                completion(nil, ServiceError.unexpected(error))
             }
         } else {
-            return Result.fail(ServiceError.couldNotParseResponse)
+            completion(nil, ServiceError.couldNotParseResponse)
         }
     }
 }
