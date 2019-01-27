@@ -1,0 +1,4 @@
+coverage:
+  ignore:
+    - Appub/Features/Beer\ Detail/*
+    - Appub/Features/Beer\ List/*
