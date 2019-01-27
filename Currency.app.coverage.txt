@@ -1,0 +1,733 @@
+/Users/raduj/Developer/Currency/Currency/Entities/Model/Currency.swift:
+    1|       |//
+    2|       |//  Currency.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 20/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import UIKit
+   10|       |
+   11|       |struct Currency {
+   12|       |    let symbol: String
+   13|       |    let name: String
+   14|       |    let amount: Double
+   15|       |    let countryImage: UIImage
+   16|       |    
+   17|      0|    init(symbol: String, rate: Double) {
+   18|      0|        self.symbol = symbol
+   19|      0|        self.name = NSLocalizedString(symbol, comment: "")
+   20|      0|        self.amount = rate
+   21|      0|        guard let image = UIImage(named: symbol) else {
+   22|      0|            self.countryImage = UIImage(named: "default-flag.png")!
+   23|      0|            return
+   24|      0|        }
+   25|      0|        self.countryImage = image
+   26|      0|    }
+   27|       |}
+   28|       |
+   29|       |extension Currency: Equatable {
+   30|      0|    static func == (lhs: Currency, rhs: Currency) -> Bool {
+   31|      0|        return lhs.symbol == lhs.symbol &&
+   32|      0|            lhs.name == rhs.name &&
+   33|      0|            lhs.amount == rhs.amount
+   34|      0|    }
+   35|       |}
+
+/Users/raduj/Developer/Currency/Currency/Entities/Model/Exchange.swift:
+    1|       |//
+    2|       |//  Exchange.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 20/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |struct Exchange {
+   12|       |    let base: Currency
+   13|       |    let date: String
+   14|       |    let currencies: [Currency]
+   15|       |    
+   16|      0|    init(responseModel: ExchangeResponseModel) {
+   17|      0|        self.base = Currency(symbol: responseModel.base, rate: 1.00)
+   18|      0|        self.date = responseModel.date
+   19|      0|        self.currencies = responseModel.rates.map({ symbol, rate -> Currency in
+   20|      0|            return Currency(symbol: symbol, rate: rate)
+   21|      0|        })
+   22|      0|    }
+   23|       |}
+   24|       |
+   25|       |extension Exchange: Equatable {
+   26|      0|    static func ==(lhs: Exchange, rhs: Exchange) -> Bool {
+   27|      0|        return lhs.base == rhs.base &&
+   28|      0|            lhs.currencies == rhs.currencies
+   29|      0|    }
+   30|       |}
+
+/Users/raduj/Developer/Currency/Currency/Entities/Model/Rates.swift:
+    1|       |//
+    2|       |//  Rates.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 22/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |struct Rates {
+   12|       |    let rates: [String: Double]
+   13|       |    
+   14|      0|    init(responseModel: ExchangeResponseModel) {
+   15|      0|        self.rates = responseModel.rates
+   16|      0|    }
+   17|       |}
+   18|       |
+   19|       |extension Rates: Equatable {
+   20|      0|    static func ==(lhs: Rates, rhs: Rates) -> Bool {
+   21|      0|        return lhs.rates == rhs.rates
+   22|      0|    }
+   23|       |}
+
+/Users/raduj/Developer/Currency/Currency/Scenes/CurrencyList/Coordinator/CurrencyListCoordinator.swift:
+    1|       |//
+    2|       |//  CurrencyListController.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 19/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import UIKit
+   10|       |
+   11|       |final class CurrencyListCoordinator: Coordinator {
+   12|       |    var viewController: UIViewController
+   13|       |    
+   14|       |    
+   15|      0|    init(viewController: UIViewController = CurrencyListViewController()) {
+   16|      0|        guard let viewController = viewController as? CurrencyListViewController else {
+   17|      0|            fatalError("Could not cast to CurrencyListViewController")
+   18|      0|        }
+   19|      0|        let service = APIService()
+   20|      0|        let gateway = ExchangeGateway(service: service)
+   21|      0|        let interactor = CurrencyListInteractor(gateway: gateway, presenter: viewController)
+   22|      0|        viewController.interactor = interactor
+   23|      0|        self.viewController = viewController
+   24|      0|    }
+   25|       |    
+   26|       |}
+
+/Users/raduj/Developer/Currency/Currency/Scenes/CurrencyList/Gateway/ExchangeGateway.swift:
+    1|       |//
+    2|       |//  CurrencyListGateway.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 20/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |protocol ExchangeGatewayProtocol {
+   12|       |    func getExchangeCurrencies(completion: @escaping (Result<Exchange>) -> Void)
+   13|       |    func getLatestRates(completion: @escaping (Result<Rates>) -> Void)
+   14|       |}
+   15|       |
+   16|       |struct ExchangeGateway: ExchangeGatewayProtocol {
+   17|       |    private let service: ServiceProtocol
+   18|       |    
+   19|      0|    init(service: ServiceProtocol) {
+   20|      0|        self.service = service
+   21|      0|    }
+   22|       |    
+   23|      0|    func getExchangeCurrencies(completion: @escaping (Result<Exchange>) -> Void) {
+   24|      0|        getExchangeResponseModel(completion: { (result) in
+   25|      0|            switch result {
+   26|      0|            case let .success(responseModel):
+   27|      0|                let exchangeModel = Exchange(responseModel: responseModel)
+   28|      0|                completion(.success(exchangeModel))
+   29|      0|            case let .failure(responseError):
+   30|      0|                completion(.failure(responseError))
+   31|      0|            }
+   32|      0|        })
+   33|      0|    }
+   34|       |    
+   35|      0|    func getLatestRates(completion: @escaping (Result<Rates>) -> Void) {
+   36|      0|        getExchangeResponseModel { (result) in
+   37|      0|            switch result {
+   38|      0|            case let .success(responseModel):
+   39|      0|                let ratesModel = Rates(responseModel: responseModel)
+   40|      0|                completion(.success(ratesModel))
+   41|      0|            case let .failure(responseError):
+   42|      0|                completion(.failure(responseError))
+   43|      0|            }
+   44|      0|        }
+   45|      0|    }
+   46|       |    
+   47|       |    private func getExchangeResponseModel(completion: @escaping (Result<ExchangeResponseModel>) -> Void ) {
+   48|      0|        service.requestData(with: ExchangeGatewaySetup.latest) { (result) in
+   49|      0|            switch result {
+   50|      0|            case let .success(data):
+   51|      0|                do {
+   52|      0|                    let jsonDecoder = JSONDecoder()
+   53|      0|                    let responseModel = try jsonDecoder.decode(ExchangeResponseModel.self, from: data)
+   54|      0|                    completion(.success(responseModel))
+   55|      0|                } catch {
+   56|      0|                    completion(.failure(.couldNotParseObject))
+   57|      0|                }
+   58|      0|            case let .failure(responseError):
+   59|      0|                completion(.failure(responseError))
+   60|      0|            }
+   61|      0|        }
+   62|       |    }
+   63|       |}
+   64|       |
+
+/Users/raduj/Developer/Currency/Currency/Scenes/CurrencyList/Gateway/ExchangeServiceSetup.swift:
+    1|       |//
+    2|       |//  ExchangeServiceSetup.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 22/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |enum ExchangeGatewaySetup: ServiceSetup {
+   12|       |    case latest
+   13|       |    
+   14|      0|    var endpoint: String {
+   15|      0|        switch self {
+   16|      0|        case .latest:
+   17|      0|            return API.URL.base + "/latest?base=EUR"
+   18|      0|        }
+   19|      0|    }
+   20|       |}
+
+/Users/raduj/Developer/Currency/Currency/Scenes/CurrencyList/Interactor/CurrencyListInteractor.swift:
+    1|       |//
+    2|       |//  CurrencyListInteractor.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 19/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |final class CurrencyListInteractor {
+   12|       |    private let gateway: ExchangeGatewayProtocol
+   13|       |    private weak var presenter: CurrencyListPresenter?
+   14|       |    private var rates: [String: Double] = [:]
+   15|       |    private let timeInterval: TimeInterval = 1
+   16|       |    private var exchange: ExchangeViewModel?
+   17|       |    private var timer = Timer()
+   18|       |    
+   19|      0|    init(gateway: ExchangeGatewayProtocol, presenter: CurrencyListPresenter) {
+   20|      0|        self.gateway = gateway
+   21|      0|        self.presenter = presenter
+   22|      0|        startTimer()
+   23|      0|    }
+   24|       |    
+   25|       |    private func startTimer() {
+   26|       |        timer = Timer.scheduledTimer(timeInterval: timeInterval,
+   27|       |                                     target: self,
+   28|       |                                     selector: #selector(self.refreshRates),
+   29|       |                                     userInfo: nil,
+   30|       |                                     repeats: true)
+   31|       |    }
+   32|       |    
+   33|      0|    deinit {
+   34|      0|        timer.invalidate()
+   35|      0|    }
+   36|       |    
+   37|      0|    @objc private func refreshRates() {
+   38|      0|        timer.invalidate()
+   39|      0|        gateway.getLatestRates { [weak self] (result) in
+   40|      0|            guard let interactor = self else { return }
+   41|      0|            switch result {
+   42|      0|            case let .success(rates):
+   43|      0|                interactor.rates = rates.rates
+   44|      0|                interactor.startTimer()
+   45|      0|            case let .failure(error):
+   46|      0|                interactor.presenter?.showError(error.localizedDescription)
+   47|      0|            }
+   48|      0|        }
+   49|      0|    }
+   50|       |    
+   51|      0|    func updateRates(of list: [CurrencyViewModel], currency: String, amount: String) {
+   52|      0|        refreshRates()
+   53|      0|        guard let currencyRate = rates[currency],
+   54|      0|            let amount = amount == "" ? 0 : Double(amount)
+   55|      0|            else { return }
+   56|      0|        let euroAmount = 1.0
+   57|      0|        let rate = euroAmount / currencyRate
+   58|      0|        let baseCurrencyAmount = rate * amount
+   59|      0|        let updatedList = list.map { (current) -> CurrencyViewModel in
+   60|      0|            guard let currencyRate = rates[current.symbol] else { fatalError("Currency Not Found.") }
+   61|      0|            var newAmount = baseCurrencyAmount * currencyRate
+   62|      0|            if current.symbol == currency {
+   63|      0|                newAmount = amount
+   64|      0|            }
+   65|      0|            return CurrencyViewModel(image: current.image,
+   66|      0|                                     name: current.name,
+   67|      0|                                     amount: newAmount,
+   68|      0|                                     symbol: current.symbol)
+   69|      0|        }
+   70|      0|        guard let baseCurrency = exchange?.base else {
+   71|      0|            presenter?.showError(ServiceError.unknown("Could not found the base currency.").localizedDescription)
+   72|      0|            return
+   73|      0|        }
+   74|      0|        let updatedBaseCurrency = CurrencyViewModel(image: baseCurrency.image,
+   75|      0|                                                    name: baseCurrency.name,
+   76|      0|                                                    amount: baseCurrencyAmount,
+   77|      0|                                                    symbol: baseCurrency.symbol)
+   78|      0|        let updatedExchange = ExchangeViewModel(base: updatedBaseCurrency, rates: updatedList)
+   79|      0|        presenter?.updateRates(viewModel: updatedExchange)
+   80|      0|    }
+   81|       |    
+   82|      0|    func listCurrencies() {
+   83|      0|        gateway.getExchangeCurrencies { [weak self] (result) in
+   84|      0|            guard let interactor = self else { return }
+   85|      0|            switch result {
+   86|      0|            case let .success(exchange):
+   87|      0|                let viewModel = ExchangeViewModel(exchange: exchange)
+   88|      0|                interactor.exchange = viewModel
+   89|      0|                interactor.presenter?.showList(with: viewModel)
+   90|      0|            case let .failure(error):
+   91|      0|                interactor.presenter?.showError(error.localizedDescription)
+   92|      0|            }
+   93|      0|        }
+   94|      0|    }
+   95|       |}
+
+/Users/raduj/Developer/Currency/Currency/Scenes/CurrencyList/ViewModel/CurrencyViewModel.swift:
+    1|       |//
+    2|       |//  CurrencyViewModel.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 20/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import UIKit
+   10|       |
+   11|       |struct CurrencyViewModel {
+   12|       |    let image: UIImage
+   13|       |    let name: String
+   14|       |    let amount: String
+   15|       |    let symbol: String
+   16|       |    
+   17|      0|    init(currency: Currency) {
+   18|      0|        self.image = currency.countryImage
+   19|      0|        self.name = currency.name
+   20|      0|        self.amount = String(format: "%.2f", currency.amount)
+   21|      0|        self.symbol = currency.symbol
+   22|      0|    }
+   23|       |    
+   24|      0|    init(image: UIImage, name: String, amount: Double, symbol: String) {
+   25|      0|        self.image = image
+   26|      0|        self.name = name
+   27|      0|        self.amount = String(format: "%.2f", amount)
+   28|      0|        self.symbol = symbol
+   29|      0|    }    
+   30|       |}
+   31|       |
+   32|       |extension CurrencyViewModel: Equatable {
+   33|      0|    static func ==(lhs: CurrencyViewModel, rhs: CurrencyViewModel) -> Bool {
+   34|      0|        return lhs.image == rhs.image &&
+   35|      0|            lhs.name == rhs.name &&
+   36|      0|            lhs.amount == rhs.amount &&
+   37|      0|            lhs.symbol == rhs.symbol
+   38|      0|    }
+   39|       |}
+
+/Users/raduj/Developer/Currency/Currency/Scenes/CurrencyList/ViewModel/ExchangeViewModel.swift:
+    1|       |//
+    2|       |//  ExchangeViewModel.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 21/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |struct ExchangeViewModel {
+   12|       |    let base: CurrencyViewModel
+   13|       |    let rates: [CurrencyViewModel]
+   14|       |    
+   15|      0|    init(exchange: Exchange) {
+   16|      0|        self.base = CurrencyViewModel(currency: exchange.base)
+   17|      0|        self.rates = exchange.currencies.map({ CurrencyViewModel(currency: $0) })
+   18|      0|    }
+   19|       |    
+   20|      0|    init(base: CurrencyViewModel, rates: [CurrencyViewModel]) {
+   21|      0|        self.base = base
+   22|      0|        self.rates = rates
+   23|      0|    }
+   24|       |}
+   25|       |
+   26|       |extension ExchangeViewModel: Equatable {
+   27|      0|    static func ==(lhs: ExchangeViewModel, rhs: ExchangeViewModel) -> Bool {
+   28|      0|        return lhs.base == rhs.base &&
+   29|      0|            lhs.rates == rhs.rates
+   30|      0|    }
+   31|       |}
+
+/Users/raduj/Developer/Currency/Currency/Scenes/CurrencyList/Views/CurrencyListViewController.swift:
+    1|       |//
+    2|       |//  CurrencyListViewController.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 18/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import UIKit
+   10|       |
+   11|       |final class CurrencyListViewController: UIViewController {
+   12|       |    @IBOutlet private weak var tableView: UITableView!
+   13|       |    @IBOutlet private weak var baseCurrencyImage: UIImageView!
+   14|       |    @IBOutlet private weak var baseCurrencySymbol: UILabel!
+   15|       |    @IBOutlet private weak var baseCurrencyName: UILabel!
+   16|       |    @IBOutlet private weak var loadingView: UIView!
+   17|       |    private let cellIdentifier = "CurrencyTableViewCell"
+   18|       |    private var listViewModel: [CurrencyViewModel] = []
+   19|       |    var interactor: CurrencyListInteractor?
+   20|       |    
+   21|      1|    override func viewDidLoad() {
+   22|      1|        super.viewDidLoad()
+   23|      1|        setupTableView()
+   24|      1|        interactor?.listCurrencies()
+   25|      1|        observeTextfield()
+   26|      1|        tableView.accessibilityIdentifier = "currencyTableView"
+   27|      1|    }
+   28|       |    
+   29|       |    private func setupTableView() {
+   30|       |        self.tableView.delegate = self
+   31|       |        self.tableView.dataSource = self
+   32|       |        self.tableView.tableFooterView = UIView()
+   33|       |        tableView.register(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
+   34|       |    }
+   35|       |    
+   36|      0|    private func updateHeader(viewModel: CurrencyViewModel) {
+   37|      0|        self.baseCurrencyImage.image = viewModel.image
+   38|      0|        self.baseCurrencyName.text = viewModel.name
+   39|      0|        self.baseCurrencySymbol.text = viewModel.symbol + " " +  viewModel.amount
+   40|      0|    }
+   41|       |    
+   42|       |    //MARK: Observer for the texfield
+   43|       |    func observeTextfield() {
+   44|      0|        _ = NotificationCenter.default.addObserver(forName: Notification.Name.Currency.DidChangeBaseAmount, object: nil, queue: OperationQueue.main) {[weak self] (notification) -> Void in
+   45|      0|            guard
+   46|      0|                let controller = self,
+   47|      0|                let stringValue = notification.userInfo?["value"] as? String
+   48|      0|                else { return }
+   49|      0|            let firstIndex = 0
+   50|      0|            let selectedCurrency = controller.listViewModel[firstIndex].symbol
+   51|      0|            controller.interactor?.updateRates(of: controller.listViewModel,
+   52|      0|                                                currency: selectedCurrency,
+   53|      0|                                                amount: stringValue)
+   54|      0|        }
+   55|       |    }
+   56|       |}
+   57|       |
+   58|       |//MARK: TableView Delegate and DataSource
+   59|       |extension CurrencyListViewController: UITableViewDelegate {
+   60|      0|    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+   61|      0|        let destinationIndex = IndexPath(row: 0, section: 0)
+   62|      0|        tableView.beginUpdates()
+   63|      0|        let rate = listViewModel.remove(at: indexPath.row)
+   64|      0|        listViewModel.insert(rate, at: destinationIndex.row)
+   65|      0|        self.tableView.moveRow(at: indexPath, to: destinationIndex)
+   66|      0|        tableView.endUpdates()
+   67|      0|        
+   68|      0|        DispatchQueue.main.async {
+   69|      0|            tableView.reloadData()
+   70|      0|            UIView.animate(withDuration: 0.5, animations: {
+   71|      0|                tableView.scrollToRow(at: destinationIndex, at: .top, animated: false)
+   72|      0|            }, completion: { (_) in
+   73|      0|                let cell = tableView.cellForRow(at: destinationIndex)
+   74|      0|                cell?.becomeFirstResponder()
+   75|      0|            })
+   76|      0|        }
+   77|      0|    }
+   78|       |    
+   79|      0|    private func configure(_ cell: CurrencyTableViewCell, atIndexPath indexPath: IndexPath) {
+   80|      0|        cell.bind(listViewModel[indexPath.row])
+   81|      0|        cell.valueTextField.delegate = self
+   82|      0|    }
+   83|       |    
+   84|      0|    private func refreshVisibleCells() {
+   85|      0|        for cell in tableView.visibleCells {
+   86|      0|            guard let current = cell as? CurrencyTableViewCell
+   87|      0|                else { break }
+   88|      0|            if current.isEditing {
+   89|      0|                continue
+   90|      0|            }
+   91|      0|            guard let cellIndexPath = tableView.indexPath(for: current) else { break }
+   92|      0|            configure(current, atIndexPath: cellIndexPath)
+   93|      0|        }
+   94|      0|    }
+   95|       |}
+   96|       |
+   97|       |extension CurrencyListViewController: UITableViewDataSource {
+   98|      4|    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+   99|      4|        return listViewModel.count
+  100|      4|    }
+  101|       |    
+  102|      5|    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  103|      5|        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CurrencyTableViewCell
+  104|      5|            else { return UITableViewCell() }
+  105|      5|        configure(cell, atIndexPath: indexPath)
+  106|      5|        return cell
+  107|      5|    }
+  108|       |}
+  109|       |
+  110|       |//MARK: Currency List Presenter
+  111|       |extension CurrencyListViewController: CurrencyListPresenter {
+  112|      0|    func updateRates(viewModel: ExchangeViewModel) {
+  113|      0|        DispatchQueue.main.async { [weak self] in
+  114|      0|            guard let viewController = self else { return }
+  115|      0|            viewController.listViewModel = viewModel.rates
+  116|      0|            viewController.updateHeader(viewModel: viewModel.base)
+  117|      0|            viewController.refreshVisibleCells()
+  118|      0|        }
+  119|      0|    }
+  120|       |    
+  121|      0|    func showList(with exchange: ExchangeViewModel) {
+  122|      0|        DispatchQueue.main.async { [weak self] in
+  123|      0|            guard let viewController = self else { return }
+  124|      0|            viewController.listViewModel = exchange.rates
+  125|      0|            viewController.updateHeader(viewModel: exchange.base)
+  126|      0|            viewController.tableView.reloadData()
+  127|      0|            viewController.loadingView.isHidden = true
+  128|      0|        }
+  129|      0|    }
+  130|       |    
+  131|      0|    func showError(_ error: String) {
+  132|      0|        let alertVC = UIAlertController(title: "Alert", message: error, preferredStyle: .alert)
+  133|      0|        alertVC.addAction(UIAlertAction(title: "Retry", style: .default, handler: { (_) in
+  134|      0|            self.interactor?.listCurrencies()
+  135|      0|        }))
+  136|      0|        self.present(alertVC, animated: true, completion: nil)
+  137|      0|    }
+  138|       |}
+  139|       |
+  140|       |//MARK: Textfield Delegate
+  141|       |extension CurrencyListViewController: UITextFieldDelegate {
+  142|       |    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+  143|      0|                   replacementString string: String) -> Bool {
+  144|      0|        guard let text = textField.text else { return true }
+  145|      0|        
+  146|      0|        let decimalSeparator = NSLocale.current.decimalSeparator ?? "."
+  147|      0|        let isDecimalSeparatorCountCorrect = (text.components(separatedBy: decimalSeparator).count - 1 + string.components(separatedBy: decimalSeparator).count - 1) <= 1
+  148|      0|        let newLength = text.count + string.count - range.length
+  149|      0|        
+  150|      0|        return isDecimalSeparatorCountCorrect && (newLength <= 6 || newLength < text.count)
+  151|      0|    }
+  152|       |    
+  153|       |}
+
+/Users/raduj/Developer/Currency/Currency/Scenes/CurrencyList/Views/CurrencyTableViewCell.swift:
+    1|       |//
+    2|       |//  CurrencyTableViewCell.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 20/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import UIKit
+   10|       |
+   11|       |final class CurrencyTableViewCell: UITableViewCell {
+   12|       |    @IBOutlet private weak var countryImage: UIImageView!
+   13|       |    @IBOutlet private weak var symbolLabel: UILabel!
+   14|       |    @IBOutlet private weak var nameLabel: UILabel!
+   15|       |    @IBOutlet weak var valueTextField: UITextField!
+   16|       |    
+   17|      5|    override func awakeFromNib() {
+   18|      5|        super.awakeFromNib()
+   19|      5|        setupAcessoryView()
+   20|      5|    }
+   21|       |    
+   22|      0|    override func prepareForReuse() {
+   23|      0|        super.prepareForReuse()
+   24|      0|        countryImage.image = nil
+   25|      0|        nameLabel.text = ""
+   26|      0|        valueTextField.text = ""
+   27|      0|        symbolLabel.text = ""
+   28|      0|        isEditing = false
+   29|      0|        valueTextField.isUserInteractionEnabled = false
+   30|      0|    }
+   31|       |    
+   32|       |    private func setupAcessoryView() {
+   33|       |        let toolBar = UIToolbar()
+   34|       |        let doneButton = UIBarButtonItem(title: "Done", style: .done,
+   35|       |                                         target: self, action: #selector(doneEditing))
+   36|       |        toolBar.items = [doneButton]
+   37|       |        toolBar.sizeToFit()
+   38|       |        valueTextField.isUserInteractionEnabled = false
+   39|       |        valueTextField.inputAccessoryView = toolBar
+   40|       |    }
+   41|       |    
+   42|      0|    @objc private func doneEditing() {
+   43|      0|        self.isEditing = false
+   44|      0|        valueTextField.isUserInteractionEnabled = false
+   45|      0|        valueTextField.resignFirstResponder()
+   46|      0|        guard let text = valueTextField.text,
+   47|      0|            !text.contains(".") else { return }
+   48|      0|        valueTextField.text?.append(contentsOf: ".00")
+   49|      0|    }
+   50|       |    
+   51|      0|    func bind(_ item: CurrencyViewModel) {
+   52|      0|        self.countryImage.image = item.image
+   53|      0|        self.symbolLabel.text = item.symbol
+   54|      0|        self.nameLabel.text = item.name
+   55|      0|        self.valueTextField.text = item.amount
+   56|      0|    }
+   57|       |    
+   58|      0|    @IBAction func didChangedText(_ sender: UITextField) {
+   59|      0|        let text = valueTextField.text
+   60|      0|        let validatedText = text?.replacingOccurrences(of: ",", with: ".")
+   61|      0|        valueTextField.text = validatedText
+   62|      0|        NotificationCenter.default.post(name: Notification.Name.Currency.DidChangeBaseAmount,
+   63|      0|                                        object: nil, userInfo: ["value": validatedText ?? ""])
+   64|      0|    }
+   65|       |    
+   66|      0|    override func becomeFirstResponder() -> Bool {
+   67|      0|        self.isEditing = true
+   68|      0|        valueTextField.isUserInteractionEnabled = true
+   69|      0|        return valueTextField.becomeFirstResponder()
+   70|      0|    }
+   71|       |    
+   72|      5|    override func setSelected(_ selected: Bool, animated: Bool) {
+   73|      5|        super.setSelected(selected, animated: animated)
+   74|      5|        super.setSelected(false, animated: animated)
+   75|      5|    }
+   76|       |    
+   77|       |}
+
+/Users/raduj/Developer/Currency/Currency/Service/Service.swift:
+    1|       |//
+    2|       |//  Service.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 19/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |protocol ServiceProtocol {
+   12|       |    func requestData(with setup: ServiceSetup, completion: @escaping (Result<Data>) -> Void)
+   13|       |}
+   14|       |
+   15|       |struct APIService: ServiceProtocol {
+   16|       |    
+   17|      0|    public func requestData(with setup: ServiceSetup, completion: @escaping (Result<Data>) -> Void) {
+   18|      0|        guard let url = URL(string: setup.endpoint) else {
+   19|      0|            completion(.failure(.urlNotFound))
+   20|      0|            return
+   21|      0|        }
+   22|      0|        DispatchQueue.main.async {
+   23|      0|            URLSession.shared.dataTask(with: url) { (data, response, error) in
+   24|      0|                if let error = error {
+   25|      0|                    completion(.failure(.unknown(error.localizedDescription)))
+   26|      0|                }
+   27|      0|                
+   28|      0|                guard let data = data else {
+   29|      0|                    completion(.failure(.brokenData))
+   30|      0|                    return
+   31|      0|                }
+   32|      0|                
+   33|      0|                guard let httpResponse = response as? HTTPURLResponse else {
+   34|      0|                    completion(.failure(.unknown("Could not cast to HTTPURLResponse object.")))
+   35|      0|                    return
+   36|      0|                }
+   37|      0|                
+   38|      0|                switch httpResponse.statusCode {
+   39|      0|                case 200...299:
+   40|      0|                    completion(.success(data))
+   41|      0|                    
+   42|      0|                case 403:
+   43|      0|                    completion(.failure(.authenticationRequired))
+   44|      0|                    
+   45|      0|                case 404:
+   46|      0|                    completion(.failure(.couldNotFindHost))
+   47|      0|                    
+   48|      0|                case 500:
+   49|      0|                    completion(.failure(.badRequest))
+   50|      0|                    
+   51|      0|                default: break
+   52|      0|                }
+   53|      0|                }.resume()
+   54|      0|        }
+   55|      0|    }
+   56|       |}
+
+/Users/raduj/Developer/Currency/Currency/Service/ServiceError.swift:
+    1|       |//
+    2|       |//  ServiceError.swift
+    3|       |//  Currency
+    4|       |//
+    5|       |//  Created by Judar Lima on 19/01/19.
+    6|       |//  Copyright © 2019 Judar Lima. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |enum ServiceError: Error {
+   12|       |    case urlNotFound
+   13|       |    case authenticationRequired
+   14|       |    case brokenData
+   15|       |    case couldNotFindHost
+   16|       |    case couldNotParseObject
+   17|       |    case badRequest
+   18|       |    case unknown(String)
+   19|       |    
+   20|      0|    var localizedDescription: String {
+   21|      0|        switch self {
+   22|      0|        case .urlNotFound: return "Could not found URL."
+   23|      0|        case .authenticationRequired: return "Authentication is required."
+   24|      0|        case .brokenData: return "The received data is broken."
+   25|      0|        case .couldNotFindHost: return "The host was not found."
+   26|      0|        case .badRequest: return "This is a bad request."
+   27|      0|        case .couldNotParseObject: return "Can't convert the data to the object entity."
+   28|      0|        case let .unknown(message): return message
+   29|      0|        }
+   30|      0|    }
+   31|       |}
+   32|       |
+   33|       |extension ServiceError: Equatable {
+   34|      0|    static func ==(lhs: ServiceError, rhs: ServiceError) -> Bool {
+   35|      0|        return lhs.localizedDescription == rhs.localizedDescription
+   36|      0|    }
+   37|       |}
+
+/Users/raduj/Developer/Currency/Currency/Supporting Files/AppDelegate.swift:
+    1|       |import UIKit
+    2|       |
+    3|       |@UIApplicationMain
+    4|       |class AppDelegate: UIResponder, UIApplicationDelegate {
+    5|       |    
+    6|       |    var window: UIWindow?
+    7|       |    
+    8|      1|    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    9|      1|        
+   10|      1|        let coordinator = CurrencyListCoordinator()
+   11|      1|        
+   12|      1|        window = UIWindow()
+   13|      1|        window?.rootViewController = coordinator.viewController
+   14|      1|        window?.makeKeyAndVisible()
+   15|      1|        
+   16|      1|        return true
+   17|      1|    }
+   18|       |}
+   19|       |
+

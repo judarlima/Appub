@@ -1,0 +1,350 @@
+/Users/raduj/Developer/Appub/AppubUnitTests/Data Source/ArrayDataProviderTests.swift:
+    1|       |import XCTest
+    2|       |@testable import Appub
+    3|       |
+    4|       |class ArrayDataProviderTests: XCTestCase {
+    5|       |    var sut: ArrayDataProvider<Beer>!
+    6|       |    
+    7|      8|    override func tearDown() {
+    8|      8|        sut = nil
+    9|      8|    }
+   10|       |    
+   11|      1|    func testCallNumberOfSectionsThenReturnsOne() {
+   12|      1|        let beers = TestHelper.createBeerList()
+   13|      1|        sut = ArrayDataProvider<Beer>(array: [beers])
+   14|      1|        let expectedSectionNumber = 1
+   15|      1|        
+   16|      1|        let currentSectionNumber = sut.numberOfSections()
+   17|      1|        
+   18|      1|        XCTAssertEqual(expectedSectionNumber, currentSectionNumber)
+   19|      1|        
+   20|      1|    }
+   21|       |    
+   22|      1|    func testCallNumberOfItemsInSectionWithNonEmptyArrayThenReturnsOne() {
+   23|      1|        let beers = TestHelper.createBeerList()
+   24|      1|        sut = ArrayDataProvider<Beer>(array: [beers])
+   25|      1|        let expectedNumberOfItems = 1
+   26|      1|        let sectionNumber = 0
+   27|      1|        
+   28|      1|        let currentNumberOfItems = sut.numberOfItems(in: sectionNumber)
+   29|      1|        
+   30|      1|        XCTAssertEqual(expectedNumberOfItems, currentNumberOfItems)
+   31|      1|    }
+   32|       |    
+   33|      1|    func testCallNumberOfItemsInSectionWithInvalidSectionThenReturnsZero() {
+   34|      1|        let beers: [Beer] =  []
+   35|      1|        sut = ArrayDataProvider<Beer>(array: [beers])
+   36|      1|        let expectedNumberOfItems = 0
+   37|      1|        let sectionNumber = -1
+   38|      1|        
+   39|      1|        let currentNumberOfItems = sut.numberOfItems(in: sectionNumber)
+   40|      1|        
+   41|      1|        XCTAssertEqual(expectedNumberOfItems, currentNumberOfItems)
+   42|      1|    }
+   43|       |    
+   44|      1|    func testCallNumberOfItemsInSectionWithEmptyArrayThenReturnsZero() {
+   45|      1|        let beers: [Beer] =  []
+   46|      1|        sut = ArrayDataProvider<Beer>(array: [beers])
+   47|      1|        let expectedNumberOfItems = 0
+   48|      1|        let sectionNumber = 0
+   49|      1|        
+   50|      1|        let currentNumberOfItems = sut.numberOfItems(in: sectionNumber)
+   51|      1|        
+   52|      1|        XCTAssertEqual(expectedNumberOfItems, currentNumberOfItems)
+   53|      1|    }
+   54|       |    
+   55|      1|    func testCallItemAtIndexPathWithValidIndexThenReturnBeerItemAtIndex() {
+   56|      1|        let beers = [TestHelper.createBeerList()]
+   57|      1|        sut = ArrayDataProvider<Beer>(array: beers)
+   58|      1|        let indexPath = IndexPath(row: 0, section: 0)
+   59|      1|        let expectedItem = beers[indexPath.section][indexPath.row]
+   60|      1|        
+   61|      1|        let currentItem = sut.item(at: indexPath)
+   62|      1|        
+   63|      1|        XCTAssertEqual(expectedItem, currentItem)
+   64|      1|    }
+   65|       |    
+   66|      1|    func testCallItemAtIndexPathWithOutOfRangeIndexThenReturnsNil() {
+   67|      1|        let beers = [TestHelper.createBeerList()]
+   68|      1|        sut = ArrayDataProvider<Beer>(array: beers)
+   69|      1|        let indexPath = IndexPath(row: 0, section: 1)
+   70|      1|        
+   71|      1|        let currentItem = sut.item(at: indexPath)
+   72|      1|        
+   73|      1|        XCTAssertNil(currentItem)
+   74|      1|    }
+   75|       |    
+   76|      1|    func testCallUpdateItemAtIndexPathThenModifyItemAtIndexPath() {
+   77|      1|        let beers = [TestHelper.createBeerList()]
+   78|      1|        sut = ArrayDataProvider<Beer>(array: beers)
+   79|      1|        let indexPath = IndexPath(row: 0, section: 0)
+   80|      1|        let initialValue = beers[indexPath.section][indexPath.row]
+   81|      1|        let expectedValue = TestHelper.createBeerItem()
+   82|      1|        
+   83|      1|        sut.updateItem(at: indexPath, value: expectedValue)
+   84|      1|        let valueModified = sut.items[indexPath.section][indexPath.row]
+   85|      1|        
+   86|      1|        XCTAssertEqual(expectedValue, valueModified)
+   87|      1|        XCTAssertNotEqual(expectedValue, initialValue)
+   88|      1|    }
+   89|       |    
+   90|      1|    func testCallUpdateItemAtIndexPathWithOutOfRangeIndexThenNotUpdateItemAtIndexPath() {
+   91|      1|        let beers = [TestHelper.createBeerList()]
+   92|      1|        sut = ArrayDataProvider<Beer>(array: beers)
+   93|      1|        let outOfBoundIndexPath = IndexPath(row: 2, section: 3)
+   94|      1|        let correctIndexPath = IndexPath(row: 0, section: 0)
+   95|      1|        let valueToModify = TestHelper.createBeerItem()
+   96|      1|        
+   97|      1|        sut.updateItem(at: outOfBoundIndexPath, value: valueToModify)
+   98|      1|        let currentItem = sut.items[correctIndexPath.section][correctIndexPath.row]
+   99|      1|        
+  100|      1|        XCTAssertNotEqual(valueToModify, currentItem)
+  101|      1|        XCTAssertFalse(sut.items.contains([valueToModify]))
+  102|      1|    }
+  103|       |    
+  104|       |}
+
+/Users/raduj/Developer/Appub/AppubUnitTests/Gateway/BeerGatewayTests.swift:
+    1|       |import XCTest
+    2|       |@testable import Appub
+    3|       |
+    4|       |class BeerGatewayTests: XCTestCase {
+    5|       |    var sut: BeersGateway!
+    6|       |    var service: ServiceMock!
+    7|       |    
+    8|      4|    override func setUp() {
+    9|      4|        super.setUp()
+   10|      4|        service = ServiceMock()
+   11|      4|        sut = BeersGateway(service: service)
+   12|      4|    }
+   13|       |    
+   14|      1|    func testGetAllBeersSuccessWhenServiceReturnJsonData() {
+   15|      1|        let expectedBeers = TestHelper.createBeerList()
+   16|      1|        
+   17|      1|        sut.getAllBeers { (result) in
+   18|      1|            switch result {
+   19|      1|            case let .success(resultBeers): XCTAssertEqual(resultBeers, expectedBeers)
+   20|      1|            default: XCTFail("Could not return beer collection.")
+   21|      1|            }
+   22|      1|        }
+   23|      1|    }
+   24|       |    
+   25|      1|    func testGetAllBeersFailWhenServiceReturnServiceError() {
+   26|      1|        service.isFailure = true
+   27|      1|        let errorMessage = "The operation couldn’t be completed. (Appub.ServiceError error 0.)"
+   28|      1|        
+   29|      1|        sut.getAllBeers { (result) in
+   30|      1|            switch result {
+   31|      1|            case let .fail(error):
+   32|      1|                XCTAssertNotNil(error)
+   33|      1|                XCTAssertEqual(errorMessage, error?.localizedDescription)
+   34|      1|            default: XCTFail("Could not validate fail result.")
+   35|      1|            }
+   36|      1|        }
+   37|      1|    }
+   38|       |    
+   39|      1|    func testGetBeerSuccessWhenServiceReturnJsonData() {
+   40|      1|        let expectedBeer = TestHelper.createBeerList().first!
+   41|      1|        let beerId = "5"
+   42|      1|        
+   43|      1|        sut.getBeer(with: beerId) { (result) in
+   44|      1|            switch result {
+   45|      1|            case let .success(resultBeer): XCTAssertEqual(expectedBeer, resultBeer)
+   46|      1|            default: XCTFail("Could not return beer object.")
+   47|      1|            }
+   48|      1|        }
+   49|      1|    }
+   50|       |    
+   51|      1|    func testGetBeerFailWhenServiceReturnServiceError() {
+   52|      1|        service.isFailure = true
+   53|      1|        let beerId = "5"
+   54|      1|        let errorMessage = "The operation couldn’t be completed. (Appub.ServiceError error 0.)"
+   55|      1|        
+   56|      1|        sut.getBeer(with: beerId) { (result) in
+   57|      1|            switch result {
+   58|      1|            case let .fail(error):
+   59|      1|                XCTAssertNotNil(error)
+   60|      1|                XCTAssertEqual(errorMessage, error?.localizedDescription)
+   61|      1|            default: XCTFail("Could not validate fail result.")
+   62|      1|            }
+   63|      1|        }
+   64|      1|    }
+   65|       |}
+
+/Users/raduj/Developer/Appub/AppubUnitTests/Interactor/BeersInteractorTests.swift:
+    1|       |import XCTest
+    2|       |@testable import Appub
+    3|       |
+    4|       |class BeersInteractorTests: XCTestCase {
+    5|       |    var sut: BeersInteractor!
+    6|       |    var gateway: BeerGatewayMock!
+    7|       |    var presenter: BeerPresenterMock!
+    8|       |    var router: BeerRouterMock!
+    9|       |    
+   10|      4|    override func setUp() {
+   11|      4|        
+   12|      4|        super.setUp()
+   13|      4|        gateway = BeerGatewayMock()
+   14|      4|        presenter = BeerPresenterMock()
+   15|      4|        router = BeerRouterMock()
+   16|      4|        sut = BeersInteractor(gateway: gateway, presenter: presenter, router: router)
+   17|      4|    }
+   18|       |    
+   19|      1|    func testGetBeerListWhenGatewayReturnsSucessResultThenPresentBeerList() {
+   20|      1|        sut.beerList()
+   21|      1|        
+   22|      1|        XCTAssertTrue(presenter.beerListWasPresented)
+   23|      1|        XCTAssertFalse(presenter.errorWasPresented)
+   24|      1|    }
+   25|       |    
+   26|      1|    func testGetBeerListWhenGatewayReturnsFailResultThenPresentError() {
+   27|      1|        gateway.isFailure = true
+   28|      1|        
+   29|      1|        sut.beerList()
+   30|      1|        
+   31|      1|        XCTAssertTrue(presenter.errorWasPresented)
+   32|      1|        XCTAssertFalse(presenter.beerListWasPresented)
+   33|      1|    }
+   34|       |    
+   35|      1|    func testGetBeerWhenGatewayReturnsSuccessResultThenRouteToDetail() {
+   36|      1|        let beerId = "10"
+   37|      1|        
+   38|      1|        sut.beer(with: beerId)
+   39|      1|        
+   40|      1|        XCTAssertTrue(router.routeToDetailWasCalled)
+   41|      1|        XCTAssertEqual(beerId, gateway.expectedId)
+   42|      1|    }
+   43|       |    
+   44|      1|    func testGetBeerWhenGatewayReturnsFailResultThenPresentError() {
+   45|      1|        gateway.isFailure = true
+   46|      1|        let beerId = "22"
+   47|      1|        sut.beer(with: beerId)
+   48|      1|        
+   49|      1|        XCTAssertTrue(presenter.errorWasPresented)
+   50|      1|        XCTAssertFalse(router.routeToDetailWasCalled)
+   51|      1|    }
+   52|       |    
+   53|       |}
+
+/Users/raduj/Developer/Appub/AppubUnitTests/Mocks/BeerGatewayMock.swift:
+    1|       |import Foundation
+    2|       |@testable import Appub
+    3|       |
+    4|       |class BeerGatewayMock: BeersGatewayProtocol {
+    5|       |    var isFailure = false
+    6|       |    var expectedId: String = ""
+    7|       |    
+    8|      2|    func getAllBeers(completion: @escaping (Result<[Beer]>) -> Void) {
+    9|      2|        if isFailure {
+   10|      1|            completion(Result.fail(.couldNotFoundURL))
+   11|      2|        } else {
+   12|      1|            completion(Result.success([Beer]()))
+   13|      2|        }
+   14|      2|    }
+   15|       |    
+   16|      2|    func getBeer(with id: String, completion: @escaping (Result<Beer>) -> Void) {
+   17|      2|        expectedId = id
+   18|      2|        if isFailure {
+   19|      1|            completion(Result.fail(.couldNotFoundURL))
+   20|      2|        } else {
+   21|      1|            completion(Result.success(Beer(id: 5,
+   22|      1|                                           name: "",
+   23|      1|                                           tagline: "",
+   24|      1|                                           description: "",
+   25|      1|                                           imageURL: "",
+   26|      1|                                           abv: 0,
+   27|      1|                                           ibu: 0)))
+   28|      2|        }
+   29|      2|    }
+   30|       |}
+   31|       |
+
+/Users/raduj/Developer/Appub/AppubUnitTests/Mocks/BeerPresenterMock.swift:
+    1|       |import XCTest
+    2|       |@testable import Appub
+    3|       |
+    4|       |class BeerPresenterMock: BeersListPresenter {
+    5|       |    var errorWasPresented: Bool = false
+    6|       |    var beerListWasPresented: Bool = false
+    7|       |    
+    8|      2|    func showError(error: Error?) {
+    9|      2|        errorWasPresented = true
+   10|      2|    }
+   11|       |    
+   12|      1|    func showBeerList(beers: [BeerCollectionViewModel]) {
+   13|      1|        beerListWasPresented = true
+   14|      1|    }
+   15|       |    
+   16|       |}
+
+/Users/raduj/Developer/Appub/AppubUnitTests/Mocks/BeerRouterMock.swift:
+    1|       |import XCTest
+    2|       |@testable import Appub
+    3|       |
+    4|       |class BeerRouterMock: BeerListRouterProtocol {
+    5|       |    var routeToDetailWasCalled = false
+    6|       |    
+    7|      1|    func routeToBeerDetails(with viewModel: BeerDetailViewModel) {
+    8|      1|        routeToDetailWasCalled = true
+    9|      1|    }
+   10|       |}
+
+/Users/raduj/Developer/Appub/AppubUnitTests/Mocks/ServiceMock.swift:
+    1|       |import Foundation
+    2|       |@testable import Appub
+    3|       |
+    4|       |class ServiceMock: ServiceProtocol {
+    5|       |    var isFailure = false
+    6|       |    
+    7|      4|    func requestData(with setup: ServiceSetup, completion: @escaping (Data?, ServiceError?) -> Void) {
+    8|      4|        if isFailure {
+    9|      2|            completion(nil, ServiceError.couldNotParseResponse)
+   10|      4|        } else {
+   11|      2|            completion(TestHelper.jsonData(), nil)
+   12|      4|        }
+   13|      4|    }
+   14|       |}
+
+/Users/raduj/Developer/Appub/AppubUnitTests/TestHelper.swift:
+    1|       |import Foundation
+    2|       |@testable import Appub
+    3|       |
+    4|       |class TestHelper {
+    5|       |    
+    6|      2|    static func jsonData() -> Data {
+    7|      2|        let fileName = "beer"
+    8|      2|        if let path = Bundle.main.path(forResource: fileName, ofType: "json") {
+    9|      2|            do {
+   10|      2|                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+   11|      2|                return data
+   12|      2|            } catch let error {
+   13|      0|                fatalError(error.localizedDescription)
+   14|      0|            }
+   15|      0|        }
+   16|      0|        fatalError("Could not read beer.json file")
+   17|      0|    }
+   18|       |    
+   19|      8|    static func createBeerList() -> [Beer] {
+   20|      8|        return [Beer(id: 5,
+   21|      8|                     name: "Avery Brown Dredge",
+   22|      8|                     tagline: "Bloggers' Imperial Pilsner.",
+   23|      8|                     description: "An Imperial Pilsner in collaboration with beer writers. Tradition. Homage." +
+   24|      8|                        " Revolution. We wanted to showcase the awesome backbone of the Czech brewing tradition," +
+   25|      8|                        " the noble Saaz hop, and also tip our hats to the modern beers that rock our world, " +
+   26|      8|            "and the people who make them.",
+   27|      8|                     imageURL: "https://images.punkapi.com/v2/5.png",
+   28|      8|                     abv: 7.2,
+   29|      8|                     ibu: 59.0)]
+   30|      8|    }
+   31|       |    
+   32|      2|    static func createBeerItem() -> Beer {
+   33|      2|        return Beer(id: 30,
+   34|      2|                    name: "shu",
+   35|      2|                    tagline: "sha",
+   36|      2|                    description: "lorem",
+   37|      2|                    imageURL: "ipsum",
+   38|      2|                    abv: 9.5,
+   39|      2|                    ibu: 3.8)
+   40|      2|    }
+   41|       |}
+

@@ -1,0 +1,592 @@
+/Users/raduj/Developer/Appub/Appub/Data Source/ArrayDataProvider.swift:
+    1|       |import Foundation
+    2|       |
+    3|       |public class ArrayDataProvider<T>: CollectionDataProvider {
+    4|       |    var items: [[T]] = []
+    5|       |    
+    6|      8|    init(array: [[T]]) {
+    7|      8|        items = array
+    8|      8|    }
+    9|       |    
+   10|      1|    public func numberOfSections() -> Int {
+   11|      1|        return items.count
+   12|      1|    }
+   13|       |    
+   14|      3|    public func numberOfItems(in section: Int) -> Int {
+   15|      3|        guard section >= 0 && section < items.count else {
+   16|      1|            return 0
+   17|      2|        }
+   18|      2|        return items[section].count
+   19|      3|    }
+   20|       |    
+   21|      2|    public func item(at indexPath: IndexPath) -> T? {
+   22|      2|        guard isNotOutOfRange(at: indexPath) else { return nil }
+   23|      1|        return items[indexPath.section][indexPath.row]
+   24|      2|    }
+   25|       |    
+   26|      2|    public func updateItem(at indexPath: IndexPath, value: T) {
+   27|      2|        guard isNotOutOfRange(at: indexPath) else { return }
+   28|      1|        items[indexPath.section][indexPath.row] = value
+   29|      1|    }
+   30|       |    
+   31|      4|    private func isNotOutOfRange(at indexPath: IndexPath) -> Bool {
+   32|      4|        return (indexPath.section >= 0 &&
+   33|      4|            indexPath.section < items.count &&
+   34|      4|            indexPath.row >= 0 &&
+   35|      4|            indexPath.row < items[indexPath.section].count)
+   36|      4|    }
+   37|       |}
+
+/Users/raduj/Developer/Appub/Appub/Data Source/CollectionArrayDataSource.swift:
+    1|       |import UIKit
+    2|       |
+    3|       |open class CollectionArrayDataSource<T, Cell: UICollectionViewCell>: CollectionDataSource<ArrayDataProvider<T>, Cell>
+    4|       |where Cell: ConfigurableCell, Cell.T == T {
+    5|       |    
+    6|      0|    public convenience init(collectionView: UICollectionView, array: [T]) {
+    7|      0|        self.init(collectionView: collectionView, array: [array])
+    8|      0|    }
+    9|       |    
+   10|      0|    public init(collectionView: UICollectionView, array: [[T]]) {
+   11|      0|        let provider = ArrayDataProvider(array: array)
+   12|      0|        super.init(collectionView: collectionView, provider: provider)
+   13|      0|    }
+   14|       |    
+   15|      0|    public func item(at indexPath: IndexPath) -> T? {
+   16|      0|        return provider.item(at: indexPath)
+   17|      0|    }
+   18|       |    
+   19|      0|    public func updateItem(at indexPath: IndexPath, value: T) {
+   20|      0|        provider.updateItem(at: indexPath, value: value)
+   21|      0|    }
+   22|       |    
+   23|       |}
+
+/Users/raduj/Developer/Appub/Appub/Data Source/CollectionDataSource.swift:
+    1|       |import UIKit
+    2|       |import NVActivityIndicatorView
+    3|       |
+    4|       |open class CollectionDataSource<Provider: CollectionDataProvider, Cell: UICollectionViewCell>:
+    5|       |    NSObject,
+    6|       |    UICollectionViewDelegate,
+    7|       |    UICollectionViewDataSource
+    8|       |where Cell: ConfigurableCell, Provider.T == Cell.T {
+    9|       |    
+   10|       |    public typealias CollectionItemSelectionHandlerType = (IndexPath) -> Void
+   11|       |    
+   12|       |    let provider: Provider
+   13|       |    private let collectionView: UICollectionView
+   14|       |    private lazy var activityData = ActivityData()
+   15|       |    
+   16|      0|    init(collectionView: UICollectionView, provider: Provider) {
+   17|      0|        self.collectionView = collectionView
+   18|      0|        self.provider = provider
+   19|      0|        super.init()
+   20|      0|        setUp()
+   21|      0|    }
+   22|       |    
+   23|      0|    func setUp() {
+   24|      0|        collectionView.dataSource = self
+   25|      0|        collectionView.delegate = self
+   26|      0|    }
+   27|       |    
+   28|      0|    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+   29|      0|        return provider.numberOfSections()
+   30|      0|    }
+   31|       |    
+   32|      0|    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+   33|      0|        return provider.numberOfItems(in: section)
+   34|      0|    }
+   35|       |    
+   36|       |    open func collectionView(_ collectionView: UICollectionView,
+   37|      0|                             cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+   38|      0|        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.reuseIdentifier,
+   39|      0|                                                            for: indexPath) as? Cell else {
+   40|      0|                                                                return UICollectionViewCell()
+   41|      0|        }
+   42|      0|        let item = provider.item(at: indexPath)
+   43|      0|        if let item = item {
+   44|      0|            cell.bind(item, at: indexPath)
+   45|      0|        }
+   46|      0|        return cell
+   47|      0|    }
+   48|       |    
+   49|       |    public var collectionItemSelectionHandler: CollectionItemSelectionHandlerType?
+   50|       |    
+   51|      0|    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+   52|      0|        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+   53|      0|        collectionItemSelectionHandler?(indexPath)
+   54|      0|    }
+   55|       |    
+   56|       |    open func collectionView(_ collectionView: UICollectionView,
+   57|       |                             viewForSupplementaryElementOfKind kind: String,
+   58|      0|                             at indexPath: IndexPath) -> UICollectionReusableView {
+   59|      0|        return UICollectionReusableView(frame: CGRect.zero)
+   60|      0|    }
+   61|       |    
+   62|       |}
+
+/Users/raduj/Developer/Appub/Appub/Data Source/ReusableCell.swift:
+    1|       |import Foundation
+    2|       |
+    3|       |public protocol ReusableCell {
+    4|       |    static var reuseIdentifier: String { get }
+    5|       |}
+    6|       |
+    7|       |public extension ReusableCell {
+    8|      0|    static var reuseIdentifier: String {
+    9|      0|        return String(describing: self)
+   10|      0|    }
+   11|       |}
+
+/Users/raduj/Developer/Appub/Appub/Features/Beer Detail/BeerDetailViewController.swift:
+    1|       |import UIKit
+    2|       |import NVActivityIndicatorView
+    3|       |
+    4|       |class BeerDetailViewController: UIViewController {
+    5|       |    
+    6|       |    @IBOutlet private weak var beerImage: UIImageView!
+    7|       |    @IBOutlet private weak var nameLabel: UILabel!
+    8|       |    @IBOutlet private weak var taglineLabel: UILabel!
+    9|       |    @IBOutlet private weak var abvLabel: UILabel!
+   10|       |    @IBOutlet private weak var ibuLabel: UILabel!
+   11|       |    @IBOutlet private weak var descriptionLabel: UILabel!
+   12|       |    
+   13|       |    
+   14|       |    lazy var activityData = ActivityData()
+   15|       |    
+   16|      0|    func bind(viewModel: BeerDetailViewModel) {
+   17|      0|        let imageURL = URL(string: viewModel.imageURL)
+   18|      0|        beerImage.kf.setImage(with: imageURL)
+   19|      0|        nameLabel.text = "name: " + viewModel.name
+   20|      0|        taglineLabel.text = "tagline: " + viewModel.tagline
+   21|      0|        abvLabel.text = "abv: " + viewModel.abv
+   22|      0|        ibuLabel.text = "ibu: " + viewModel.ibu
+   23|      0|        descriptionLabel.text = viewModel.description
+   24|      0|    }
+   25|       |    
+   26|      0|    override func viewDidLoad() {
+   27|      0|        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+   28|      0|    }
+   29|       |    
+   30|       |}
+
+/Users/raduj/Developer/Appub/Appub/Features/Beer Detail/BeerDetailViewModel.swift:
+    1|       |import Foundation
+    2|       |
+    3|       |struct BeerDetailViewModel {
+    4|       |    let imageURL: String
+    5|       |    let name: String
+    6|       |    let tagline: String
+    7|       |    let abv: String
+    8|       |    let ibu: String
+    9|       |    let description: String
+   10|       |    
+   11|      1|    init(beer: Beer) {
+   12|      1|        self.imageURL = beer.imageURL
+   13|      1|        self.name = beer.name
+   14|      1|        self.tagline = beer.tagline
+   15|      1|        self.abv = String(beer.abv)
+   16|      1|        let beerIbu = beer.ibu != nil ? "\(beer.ibu!)" : "N/A"
+   17|      1|        self.ibu = beerIbu
+   18|      1|        self.description = beer.description
+   19|      1|    }
+   20|       |}
+   21|       |
+
+/Users/raduj/Developer/Appub/Appub/Features/Beer List/BeerCollectionViewCell.swift:
+    1|       |import UIKit
+    2|       |import Kingfisher
+    3|       |
+    4|       |class BeerCollectionViewCell: UICollectionViewCell, ConfigurableCell {
+    5|       |    typealias T = BeerCollectionViewModel
+    6|       |    
+    7|       |    
+    8|       |    @IBOutlet private weak var beerImage: UIImageView!
+    9|       |    @IBOutlet private weak var beerNameLabel: UILabel!
+   10|       |    @IBOutlet private weak var beerAbvLabel: UILabel!
+   11|       |    @IBOutlet private weak var containerView: UIView!
+   12|       |    
+   13|      0|    override func awakeFromNib() {
+   14|      0|        super.awakeFromNib()
+   15|      0|        makeRounded()
+   16|      0|    }
+   17|       |    
+   18|      0|    func bind(_ item: BeerCollectionViewModel, at indexPath: IndexPath) {
+   19|      0|        let imageURL = URL(string: item.beerImage)
+   20|      0|        beerImage.kf.setImage(with: imageURL)
+   21|      0|        beerNameLabel.text = "name: " + item.beerNameLabel
+   22|      0|        beerAbvLabel.text = "abv: " + item.beerAbvLabel
+   23|      0|    }
+   24|       |    
+   25|      0|    private func makeRounded() {
+   26|      0|        containerView.layer.cornerRadius = 6
+   27|      0|        containerView.layer.masksToBounds = true
+   28|      0|    }
+   29|       |}
+
+/Users/raduj/Developer/Appub/Appub/Features/Beer List/BeerCollectionViewModel.swift:
+    1|       |import Foundation
+    2|       |
+    3|       |struct BeerCollectionViewModel {
+    4|       |    let id: String
+    5|       |    let beerImage: String
+    6|       |    let beerNameLabel: String
+    7|       |    let beerAbvLabel: String
+    8|       |    
+    9|      0|    init(beer: Beer) {
+   10|      0|        self.id = String(beer.id)
+   11|      0|        self.beerImage = beer.imageURL
+   12|      0|        self.beerNameLabel = beer.name
+   13|      0|        self.beerAbvLabel = String(beer.abv)
+   14|      0|    }
+   15|       |}
+   16|       |
+
+/Users/raduj/Developer/Appub/Appub/Features/Beer List/BeerListViewController.swift:
+    1|       |import UIKit
+    2|       |import NVActivityIndicatorView
+    3|       |
+    4|       |class BeerListViewController: UIViewController {
+    5|       |    
+    6|       |    @IBOutlet private weak var collectionView: UICollectionView!
+    7|       |    private var beersDataSource: BeersDataSource?
+    8|       |    private var selectedIndexPath: IndexPath? = nil
+    9|       |    private var allBeers: [BeerCollectionViewModel] = []
+   10|       |    
+   11|      1|    private lazy var router: BeerListRouter = {
+   12|      1|        let router = BeerListRouter()
+   13|      1|        router.viewController = self
+   14|      1|        return router
+   15|      1|    }()
+   16|       |    lazy var activityData = ActivityData()
+   17|      1|    private lazy var interactor: BeersInteractor = {
+   18|      1|        let interactor = BeersInteractor(gateway: BeersGateway(service: APIService()),
+   19|      1|                                         presenter: self,
+   20|      1|                                         router: self.router)
+   21|      1|        return interactor
+   22|      1|    }()
+   23|       |    
+   24|      1|    override func viewDidLoad() {
+   25|      1|        super.viewDidLoad()
+   26|      1|        setupView()
+   27|      1|        self.interactor.beerList()
+   28|      1|        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+   29|      1|    }
+   30|       |    
+   31|      1|    private func setupView() {
+   32|      1|        collectionView.backgroundColor = .darkGray
+   33|      1|        collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
+   34|      1|    }
+   35|       |    
+   36|       |}
+   37|       |
+   38|       |extension BeerListViewController {
+   39|      0|    fileprivate func showAlertMessage(message: String) {
+   40|      0|        let alertController = UIAlertController(title: "Atenção",
+   41|      0|                                                message: message,
+   42|      0|                                                preferredStyle: UIAlertControllerStyle.alert)
+   43|      0|        let tryAgain = UIAlertAction(title: "Tentar Novamente", style: UIAlertActionStyle.default) { _ in
+   44|      0|            self.interactor.beerList()
+   45|      0|        }
+   46|      0|        alertController.addAction(tryAgain)
+   47|      0|        self.present(alertController, animated: true, completion: nil)
+   48|      0|        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+   49|      0|    }
+   50|       |}
+   51|       |
+   52|       |extension BeerListViewController: BeersListPresenter {
+   53|       |    
+   54|      0|    func showBeerList(beers: [BeerCollectionViewModel]) {
+   55|      0|        DispatchQueue.main.async { [weak self] in
+   56|      0|            guard let controller = self else { return }
+   57|      0|            controller.beersDataSource = BeersDataSource(collectionView: controller.collectionView, array: beers)
+   58|      0|            controller.beersDataSource?.collectionItemSelectionHandler = { [weak self] indexPath in
+   59|      0|                guard let strongSelf = self else { return }
+   60|      0|                strongSelf.selectedIndexPath = indexPath
+   61|      0|                strongSelf.interactor.beer(with: beers[indexPath.row].id)
+   62|      0|            }
+   63|      0|            controller.collectionView?.reloadData()
+   64|      0|            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+   65|      0|        }
+   66|      0|    }
+   67|       |    
+   68|      0|    func showError(error: Error?) {
+   69|      0|        self.showAlertMessage(message: error?.localizedDescription ?? "Erro Desconhecido.")
+   70|      0|    }
+   71|       |}
+
+/Users/raduj/Developer/Appub/Appub/Features/Beer List/BeersDataSource.swift:
+    1|       |import UIKit
+    2|       |
+    3|       |class BeersDataSource: CollectionArrayDataSource<BeerCollectionViewModel, BeerCollectionViewCell>, UICollectionViewDelegateFlowLayout {
+    4|       |    
+    5|       |    func collectionView(_ collectionView: UICollectionView,
+    6|       |                        layout collectionViewLayout: UICollectionViewLayout,
+    7|      0|                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+    8|      0|        let contentInset = collectionView.contentInset
+    9|      0|        let rightSpace: CGFloat = 10
+   10|      0|        let itemSize = (collectionView.frame.width - (contentInset.left + contentInset.right + rightSpace)) / 2
+   11|      0|        
+   12|      0|        return CGSize(width: itemSize, height: itemSize)
+   13|      0|    }
+   14|       |}
+
+/Users/raduj/Developer/Appub/Appub/Features/Common/BeersGateway.swift:
+    1|       |import Foundation
+    2|       |import Reachability
+    3|       |
+    4|       |protocol BeersGatewayProtocol {
+    5|       |    func getAllBeers(completion: @escaping (Result<[Beer]>) -> Void)
+    6|       |    func getBeer(with id: String, completion: @escaping (Result<Beer>) -> Void)
+    7|       |}
+    8|       |
+    9|       |struct BeersGateway: BeersGatewayProtocol {
+   10|       |    private let service: ServiceProtocol
+   11|       |    
+   12|      5|    init(service: ServiceProtocol) {
+   13|      5|        self.service = service
+   14|      5|    }
+   15|       |    
+   16|      3|    func getAllBeers(completion: @escaping (Result<[Beer]>) -> Void) {
+   17|      3|        service.requestData(with: BeersGatewaySetup.allBeers) { (responseData, responseError) in
+   18|      2|            completion(self.generateResult(responseData: responseData, responseError: responseError))
+   19|      2|        }
+   20|      3|    }
+   21|       |    
+   22|      2|    func getBeer(with id: String, completion: @escaping (Result<Beer>) -> Void) {
+   23|      2|        service.requestData(with: BeersGatewaySetup.singleBeer(id: id)) { (responseData, responseError) in
+   24|      2|            let result = self.generateResult(responseData: responseData, responseError: responseError)
+   25|      2|            switch result {
+   26|      2|            case let .success(beerArray):
+   27|      1|                guard let beer = beerArray.first
+   28|      1|                    else {
+   29|      0|                        completion(Result.fail(ServiceError.couldNotParseResponse))
+   30|      0|                        return
+   31|      1|                }
+   32|      1|                completion(Result.success(beer))
+   33|      2|            case let .fail(error): completion(Result.fail(error))
+   34|      2|            }
+   35|      2|        }
+   36|      2|    }
+   37|       |    
+   38|       |    private func generateResult(responseData: Data?, responseError: ServiceError?) -> Result<[Beer]> {
+   39|       |        if let error = responseError {
+   40|       |            return Result.fail(ServiceError.unexpected(error))
+   41|       |        }
+   42|       |        else if let data = responseData {
+   43|       |            do {
+   44|       |                let jsonDecoder = JSONDecoder()
+   45|       |                let response = try jsonDecoder.decode([Beer].self, from: data)
+   46|       |                return Result.success(response)
+   47|       |            } catch let error {
+   48|       |                return Result.fail(ServiceError.unexpected(error))
+   49|       |            }
+   50|       |        } else {
+   51|       |            return Result.fail(ServiceError.couldNotParseResponse)
+   52|       |        }
+   53|       |    }
+   54|       |}
+
+/Users/raduj/Developer/Appub/Appub/Features/Common/BeersInteractor.swift:
+    1|       |import Foundation
+    2|       |import Kingfisher
+    3|       |
+    4|       |protocol BeersListPresenter: class {
+    5|       |    func showBeerList(beers: [BeerCollectionViewModel])
+    6|       |    func showError(error: Error?)
+    7|       |}
+    8|       |
+    9|       |class BeersInteractor {
+   10|       |    private let gateway: BeersGatewayProtocol
+   11|       |    private weak var presenter: BeersListPresenter?
+   12|       |    private var router: BeerListRouterProtocol
+   13|       |    
+   14|       |    init(gateway: BeersGatewayProtocol,
+   15|       |         presenter: BeersListPresenter,
+   16|      5|         router: BeerListRouterProtocol) {
+   17|      5|        self.gateway = gateway
+   18|      5|        self.presenter = presenter
+   19|      5|        self.router = router
+   20|      5|    }
+   21|       |    
+   22|      3|    func beerList() {
+   23|      3|        gateway.getAllBeers { [weak self] (result) in
+   24|      2|            guard let interactor = self else { return }
+   25|      2|            switch result {
+   26|      2|                
+   27|      2|            case let .success(allBeers):
+   28|      1|                let beersViewModel = allBeers.map(BeerCollectionViewModel.init)
+   29|      1|                interactor.presenter?.showBeerList(beers: beersViewModel)
+   30|      2|                
+   31|      2|            case .fail(let error):
+   32|      1|                interactor.presenter?.showError(error: error)
+   33|      2|            }
+   34|      2|        }
+   35|      3|    }
+   36|       |    
+   37|      2|    func beer(with id: String) {
+   38|      2|        gateway.getBeer(with: id) { [weak self] (result) in
+   39|      2|            guard let interactor = self else { return }
+   40|      2|            switch result {
+   41|      2|            case let .success(beer):
+   42|      1|                let viewModel = BeerDetailViewModel(beer: beer)
+   43|      1|                interactor.router.routeToBeerDetails(with: viewModel)
+   44|      2|            case let .fail(error):
+   45|      1|                interactor.presenter?.showError(error: error)
+   46|      2|            }
+   47|      2|        }
+   48|      2|    }
+   49|       |}
+
+/Users/raduj/Developer/Appub/Appub/Features/Common/BeersViewRouter.swift:
+    1|       |import UIKit
+    2|       |
+    3|       |protocol BeerListRouterProtocol {
+    4|       |    func routeToBeerDetails(with viewModel: BeerDetailViewModel)
+    5|       |}
+    6|       |
+    7|       |class BeerListRouter: BeerListRouterProtocol {
+    8|       |    weak var viewController: BeerListViewController?
+    9|       |    
+   10|      0|    func routeToBeerDetails(with viewModel: BeerDetailViewModel) {
+   11|      0|        DispatchQueue.main.async {
+   12|      0|            let storyboard = UIStoryboard(name: "BeerDetail", bundle: nil)
+   13|      0|            guard let destinationVC = storyboard.instantiateViewController(withIdentifier: "BeerDetailViewController") as? BeerDetailViewController
+   14|      0|                else {
+   15|      0|                    fatalError("Could not instantiate BeerDetailViewController")
+   16|      0|            }
+   17|      0|            _ = destinationVC.view
+   18|      0|            destinationVC.bind(viewModel: viewModel)
+   19|      0|            self.viewController?.navigationController?.pushViewController(destinationVC, animated: true)
+   20|      0|        }
+   21|      0|    }
+   22|       |}
+
+/Users/raduj/Developer/Appub/Appub/Models/Beer.swift:
+    1|       |import Foundation
+    2|       |
+    3|       |struct Beer {
+    4|       |    let id: Int
+    5|       |    let name, tagline, description: String
+    6|       |    let imageURL: String
+    7|       |    let abv: Double
+    8|       |    let ibu: Double?
+    9|       |}
+   10|       |
+   11|       |extension Beer: Decodable {
+   12|       |    enum CodingKeys: String, CodingKey {
+   13|       |        case id, name, tagline
+   14|       |        case description
+   15|       |        case imageURL = "image_url"
+   16|       |        case abv
+   17|       |        case ibu
+   18|       |    }
+   19|       |    
+   20|      2|    init(from decoder: Decoder) throws {
+   21|      2|        let values = try decoder.container(keyedBy: CodingKeys.self)
+   22|      2|        
+   23|      2|        id = try values.decode(Int.self, forKey: .id)
+   24|      2|        name = try values.decode(String.self, forKey: .name)
+   25|      2|        tagline = try values.decode(String.self, forKey: .tagline)
+   26|      2|        description = try values.decode(String.self, forKey: .description)
+   27|      2|        imageURL = try values.decode(String.self, forKey: .imageURL)
+   28|      2|        abv = try values.decode(Double.self, forKey: .abv)
+   29|      2|        ibu = try values.decode(Double?.self, forKey: .ibu)
+   30|      2|    }
+   31|       |}
+   32|       |
+   33|       |extension Beer: Equatable {
+   34|       |    
+   35|      7|    static func == (lhs: Beer, rhs: Beer) -> Bool {
+   36|      7|        return lhs.id == rhs.id &&
+   37|      7|            lhs.name == rhs.name &&
+   38|      7|            lhs.tagline == rhs.tagline &&
+   39|      7|            lhs.description == rhs.description &&
+   40|      7|            lhs.imageURL == rhs.imageURL &&
+   41|      7|            lhs.abv == rhs.abv &&
+   42|      7|            lhs.ibu == rhs.ibu
+   43|      7|    }
+   44|       |}
+
+/Users/raduj/Developer/Appub/Appub/Network/Service.swift:
+    1|       |import Foundation
+    2|       |import Reachability
+    3|       |
+    4|       |protocol ServiceProtocol {
+    5|       |    func requestData(with setup: ServiceSetup, completion: @escaping (Data?, ServiceError?) -> Void)
+    6|       |}
+    7|       |
+    8|       |struct APIService: ServiceProtocol {
+    9|       |    
+   10|      1|    public func requestData(with setup: ServiceSetup, completion: @escaping (Data?, ServiceError?) -> Void) {
+   11|      1|        guard canReachNetwork() else {
+   12|      0|            completion(nil, .noConnection)
+   13|      0|            return
+   14|      1|        }
+   15|      1|        guard let url = URL(string: setup.endpoint) else {
+   16|      0|            completion(nil, .couldNotFoundURL)
+   17|      0|            return
+   18|      1|        }
+   19|      1|        URLSession.shared.dataTask(with: url) { (data, response, error) in
+   20|      0|            if let error = error {
+   21|      0|                print(error.localizedDescription)
+   22|      0|                completion(nil, .unexpected(error))
+   23|      0|            } else if let data = data {
+   24|      0|                completion(data, nil)
+   25|      0|            } else {
+   26|      0|                completion(nil, .couldNotParseResponse)
+   27|      0|            }
+   28|      0|            }.resume()
+   29|      1|    }
+   30|       |    
+   31|       |    private func canReachNetwork() -> Bool {
+   32|       |        if let reachAbility = Reachability(), reachAbility.connection != .none {
+   33|       |            return true
+   34|       |        } else {
+   35|       |            return false
+   36|       |        }
+   37|       |    }
+   38|       |}
+
+/Users/raduj/Developer/Appub/Appub/Network/ServiceSetup.swift:
+    1|       |import Foundation
+    2|       |
+    3|       |protocol ServiceSetup {
+    4|       |    var endpoint: String { get }
+    5|       |}
+    6|       |
+    7|       |struct API {
+    8|       |    struct URL {
+    9|       |        static let base = "https://api.punkapi.com/v2"
+   10|       |    }
+   11|       |}
+   12|       |
+   13|       |enum BeersGatewaySetup: ServiceSetup {
+   14|       |    case allBeers
+   15|       |    case singleBeer(id: String)
+   16|       |    
+   17|      1|    var endpoint: String {
+   18|      1|        switch self {
+   19|      1|        case .allBeers:
+   20|      1|            return API.URL.base + "/beers"
+   21|      1|        case let .singleBeer(id):
+   22|      0|            return API.URL.base + "/beers/\(id)"
+   23|      1|        }
+   24|      1|    }
+   25|       |}
+
+/Users/raduj/Developer/Appub/Appub/Supporting Files/AppDelegate.swift:
+    1|       |import UIKit
+    2|       |
+    3|       |@UIApplicationMain
+    4|       |class AppDelegate: UIResponder, UIApplicationDelegate {
+    5|       |    var window: UIWindow?
+    6|       |    
+    7|      1|    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    8|      1|        return true
+    9|      1|    }
+   10|       |    
+   11|       |}
+   12|       |
+

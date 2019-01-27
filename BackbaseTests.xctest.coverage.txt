@@ -1,0 +1,60 @@
+    1|       |//
+    2|       |//  BackbaseTests.swift
+    3|       |//  BackbaseTests
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/22/18.
+    6|       |//  Copyright © 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import XCTest
+   10|       |@testable import Backbase
+   11|       |
+   12|       |class BackbaseTests: XCTestCase {
+   13|       |
+   14|      1|    func testPerformanceExample() {
+   15|      1|        // This is an example of a performance test case.
+   16|      1|        let worker = BackbaseWorker()
+   17|      1|        var cities: [City] = []
+   18|      1|        worker.loadCities { (result) in
+   19|      1|            switch result {
+   20|      1|            case let .success(citiesResult):
+   21|      1|                cities = citiesResult
+   22|      1|            case let .failure(error):
+   23|      0|                print(error)
+   24|      1|            }
+   25|      1|        }
+   26|     10|        self.measure {
+   27|     10|            let searchText = ""
+   28|  2.09M|            let filteredData = cities.filter({ (city) -> Bool in
+   29|  2.09M|                return (city.name.range(of: searchText, options: .caseInsensitive) != nil)
+   30|  2.09M|            })
+   31|     10|            
+   32|     10|            print(filteredData.count)
+   33|     10|        }
+   34|      1|    }
+   35|       |    
+   36|      1|    func testPerformanceFilter() {
+   37|      1|        let worker = BackbaseWorker()
+   38|      1|        var cities: [City] = []
+   39|      1|        worker.loadCities { (result) in
+   40|      1|            switch result {
+   41|      1|            case let .success(citiesResult):
+   42|      1|                cities = citiesResult
+   43|      1|            case let .failure(error):
+   44|      0|                print(error)
+   45|      1|            }
+   46|      1|        }
+   47|      1|        
+   48|   209k|        for city in cities {
+   49|   209k|            Trie.shared.insert(word: city.name)
+   50|   209k|        }
+   51|      1|        
+   52|     10|        self.measure {
+   53|     10|            let searchText = ""
+   54|     10|            let filteredData = Trie.shared.findWordsWithPrefix(prefix: searchText)
+   55|     10|            print(filteredData.count)
+   56|     10|        }
+   57|      1|    }
+   58|       |
+   59|       |}
+

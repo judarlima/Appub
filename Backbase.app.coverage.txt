@@ -1,0 +1,752 @@
+/Users/raduj/Downloads/Backbase/Backbase/AppDelegate/AppDelegate.swift:
+    1|       |//
+    2|       |//  AppDelegate.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/22/18.
+    6|       |//  Copyright © 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import UIKit
+   10|       |
+   11|       |@UIApplicationMain
+   12|       |class AppDelegate: UIResponder, UIApplicationDelegate {
+   13|       |
+   14|       |    var window: UIWindow?
+   15|       |
+   16|       |
+   17|      1|    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+   18|      1|        
+   19|      1|//        let frame =
+   20|      1|        window = UIWindow(frame: UIScreen.main.bounds)
+   21|      1|        
+   22|      1|        let homeController = HomeViewController()
+   23|      1|        let navigationController = UINavigationController(rootViewController: homeController)
+   24|      1|        navigationController.view.frame = self.window!.bounds
+   25|      1|        self.window?.rootViewController = navigationController
+   26|      1|        self.window?.makeKeyAndVisible()
+   27|      1|
+   28|      1|        return true
+   29|      1|    }
+   30|       |
+   31|      0|    func applicationWillResignActive(_ application: UIApplication) {
+   32|      0|        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+   33|      0|        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+   34|      0|    }
+   35|       |
+   36|      0|    func applicationDidEnterBackground(_ application: UIApplication) {
+   37|      0|        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+   38|      0|        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+   39|      0|    }
+   40|       |
+   41|      0|    func applicationWillEnterForeground(_ application: UIApplication) {
+   42|      0|        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+   43|      0|    }
+   44|       |
+   45|      1|    func applicationDidBecomeActive(_ application: UIApplication) {
+   46|      1|        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+   47|      1|    }
+   48|       |
+   49|      0|    func applicationWillTerminate(_ application: UIApplication) {
+   50|      0|        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+   51|      0|    }
+   52|       |
+   53|       |
+   54|       |}
+   55|       |
+
+/Users/raduj/Downloads/Backbase/Backbase/Common/Trie.swift:
+    1|       |//
+    2|       |//  Trie.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/31/18.
+    6|       |//  Copyright © 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |class Trie {
+   12|       |     static let shared = Trie()
+   13|       |    
+   14|       |    typealias Node = TrieNode<Character>
+   15|       |    fileprivate let root: Node
+   16|       |    fileprivate var wordCount: Int
+   17|       |    
+   18|      0|    public var count: Int {
+   19|      0|        return wordCount
+   20|      0|    }
+   21|       |    
+   22|      0|    public var isEmpty: Bool {
+   23|      0|        return wordCount == 0
+   24|      0|    }
+   25|       |    
+   26|      0|    public var words: [String] {
+   27|      0|        return wordsInSubtrie(rootNode: root, partialWord: "")
+   28|      0|    }
+   29|       |    
+   30|      1|    init() {
+   31|      1|        root = Node()
+   32|      1|        wordCount = 0
+   33|      1|    }
+   34|       |}
+   35|       |
+   36|       |extension Trie {
+   37|   838k|    func insert(word: String) {
+   38|   838k|        guard !word.isEmpty else {
+   39|      0|            return
+   40|   838k|        }
+   41|   838k|        var currentNode = root
+   42|  8.40M|        for character in word.lowercased() {
+   43|  8.40M|            if let childNode = currentNode.children[character] {
+   44|  7.61M|                currentNode = childNode
+   45|  8.40M|            } else {
+   46|   795k|                currentNode.add(child: character)
+   47|   795k|                currentNode = currentNode.children[character]!
+   48|  8.40M|            }
+   49|  8.40M|        }
+   50|   838k|        // Word already present?
+   51|   838k|        guard !currentNode.isTerminating else {
+   52|   676k|            return
+   53|   676k|        }
+   54|   161k|        wordCount += 1
+   55|   161k|        currentNode.isTerminating = true
+   56|   161k|    }
+   57|       |
+   58|       |    
+   59|      0|    func contains(word: String) -> Bool {
+   60|      0|        guard !word.isEmpty else { return false}
+   61|      0|        var currentNode = root
+   62|      0|        
+   63|      0|        for character in word.lowercased() {
+   64|      0|            guard let childNode = currentNode.children[character] else {
+   65|      0|                return false
+   66|      0|            }
+   67|      0|            currentNode = childNode
+   68|      0|        }
+   69|      0|        return currentNode.isTerminating
+   70|      0|    }
+   71|       |    
+   72|     10|    private func findLastNodeOf(word: String) -> Node? {
+   73|     10|        var currentNode = root
+   74|     10|        for character in word.lowercased() {
+   75|      0|            guard let childNode = currentNode.children[character] else {
+   76|      0|                return nil
+   77|      0|            }
+   78|      0|            currentNode = childNode
+   79|     10|        }
+   80|     10|        return currentNode
+   81|     10|    }
+   82|       |    
+   83|       |    fileprivate func wordsInSubtrie(rootNode: Node, partialWord: String) -> [String] {
+   84|       |        var subtrieWords = [String]()
+   85|       |        var previousLetters = partialWord
+   86|       |        if let value = rootNode.value {
+   87|       |            previousLetters.append(value)
+   88|       |        }
+   89|       |        if rootNode.isTerminating {
+   90|       |            subtrieWords.append(previousLetters)
+   91|       |        }
+   92|       |        for childNode in rootNode.children.values {
+   93|       |            let childWords = wordsInSubtrie(rootNode: childNode, partialWord: previousLetters)
+   94|       |            subtrieWords += childWords
+   95|       |        }
+   96|       |        return subtrieWords
+   97|       |    }
+   98|       |    
+   99|     10|    func findWordsWithPrefix(prefix: String) -> [String] {
+  100|     10|        var words = [String]()
+  101|     10|        let prefixLowerCased = prefix.lowercased()
+  102|     10|        if let lastNode = findLastNodeOf(word: prefixLowerCased) {
+  103|     10|            if lastNode.isTerminating {
+  104|      0|                words.append(prefixLowerCased)
+  105|     10|            }
+  106|    850|            for childNode in lastNode.children.values {
+  107|    850|                let childWords = wordsInSubtrie(rootNode: childNode, partialWord: prefixLowerCased)
+  108|    850|                words += childWords
+  109|    850|            }
+  110|     10|        }
+  111|     10|        return words
+  112|     10|    }
+  113|       |}
+
+/Users/raduj/Downloads/Backbase/Backbase/Common/TrieNode.swift:
+    1|       |//
+    2|       |//  TrieNode.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/31/18.
+    6|       |//  Copyright © 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |
+   12|       |class TrieNode<T: Hashable> {
+   13|       |    var value: T?
+   14|       |    var isTerminating = false
+   15|       |    weak var parent: TrieNode?
+   16|       |    var children: [T: TrieNode] = [:]
+   17|       |    
+   18|   795k|    init(value: T? = nil, parent: TrieNode? = nil){
+   19|   795k|        self.value = value
+   20|   795k|        self.parent = parent
+   21|   795k|    }
+   22|       |    
+   23|   795k|    func add(child: T) {
+   24|   795k|        guard children[child] == nil else { return }
+   25|   795k|        
+   26|   795k|        children[child] = TrieNode(value: child, parent: self)
+   27|   795k|    }
+   28|       |}
+
+/Users/raduj/Downloads/Backbase/Backbase/Router/BackbaseRouter.swift:
+    1|       |//
+    2|       |//  BackbaseRouter.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/23/18.
+    6|       |//  Copyright (c) 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |//  This file was generated by the Clean Swift Xcode Templates so
+    9|       |//  you can apply clean architecture to your iOS and Mac projects,
+   10|       |//  see http://clean-swift.com
+   11|       |//
+   12|       |
+   13|       |import UIKit
+   14|       |
+   15|       |protocol BackbaseRoutingProtocol {
+   16|       |    static func setupRouter(navigationController: UINavigationController)
+   17|       |    static func routeToCityDetails(city: City)
+   18|       |}
+   19|       |
+   20|       |class BackbaseRouter: BackbaseRoutingProtocol {
+   21|       |    
+   22|       |    var navigationController: UINavigationController?
+   23|       |    
+   24|      1|    private static var sharedRouter: BackbaseRouter = {
+   25|      1|        let router = BackbaseRouter()
+   26|      1|        return router
+   27|      1|    }()
+   28|       |    
+   29|      1|    public static func setupRouter(navigationController: UINavigationController) {
+   30|      1|        self.shared().navigationController = navigationController
+   31|      1|    }
+   32|       |    
+   33|      1|    class func shared() -> BackbaseRouter {
+   34|      1|        return sharedRouter
+   35|      1|    }
+   36|       |    
+   37|      0|    public static func routeToCityDetails(city: City) {
+   38|      0|        let viewController = LocationDetailViewController()
+   39|      0|        viewController.city = city
+   40|      0|        
+   41|      0|        if let navigationController = self.sharedRouter.navigationController {
+   42|      0|            navigationController.pushViewController(viewController, animated: true)
+   43|      0|        } else {
+   44|      0|            fatalError("Error - you must call setup before accessing self.sharedRouter.navigationController")
+   45|      0|        }
+   46|      0|    }
+   47|       |}
+
+/Users/raduj/Downloads/Backbase/Backbase/Scenes/Home/Interactor/HomeInteractor.swift:
+    1|       |//
+    2|       |//  HomeInteractor.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/23/18.
+    6|       |//  Copyright (c) 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |//  This file was generated by the Clean Swift Xcode Templates so
+    9|       |//  you can apply clean architecture to your iOS and Mac projects,
+   10|       |//  see http://clean-swift.com
+   11|       |//
+   12|       |
+   13|       |import UIKit
+   14|       |
+   15|       |protocol HomeBusinessLogic {
+   16|       |  func getCities()
+   17|       |}
+   18|       |
+   19|       |class HomeInteractor: HomeBusinessLogic {
+   20|       |  var presenter: HomePresentationLogic?
+   21|       |  var worker: BackbaseWorker?
+   22|       |    
+   23|      1|    func getCities() {
+   24|      1|        worker = BackbaseWorker()
+   25|      1|        worker?.loadCities(result: { result in
+   26|      1|            switch result {
+   27|      1|            case .success(let cities):
+   28|      1|                self.presenter?.presentListOfCities(cities: cities)
+   29|      1|            case .failure(let error):
+   30|      0|                self.presenter?.presentError(message: error.errorMessage)
+   31|      1|            }
+   32|      1|        })
+   33|      1|    }
+   34|       |}
+
+/Users/raduj/Downloads/Backbase/Backbase/Scenes/Home/Models/City.swift:
+    1|       |//
+    2|       |//  Cities.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/23/18.
+    6|       |//  Copyright © 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |struct City: Decodable {
+   12|       |    var country: String
+   13|       |    var name: String
+   14|       |    var _id: Int
+   15|       |    var coord: Coordinates
+   16|       |}
+   17|       |
+   18|       |extension City: Equatable {
+   19|       |    
+   20|      0|    static func == (lhs: City, rhs: City) -> Bool {
+   21|      0|        return lhs._id == rhs._id &&
+   22|      0|            lhs.name == rhs.name &&
+   23|      0|            lhs.country == rhs.country &&
+   24|      0|            lhs.coord == rhs.coord
+   25|      0|    }
+   26|       |}
+
+/Users/raduj/Downloads/Backbase/Backbase/Scenes/Home/Models/Coordinates.swift:
+    1|       |//
+    2|       |//  coordinates.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/23/18.
+    6|       |//  Copyright © 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |struct Coordinates: Decodable {
+   12|       |    var lon: Double
+   13|       |    var lat: Double
+   14|       |}
+   15|       |
+   16|       |extension Coordinates: Equatable {
+   17|       |    
+   18|      0|    static func == (lhs: Coordinates, rhs: Coordinates) -> Bool {
+   19|      0|        return lhs.lon == rhs.lon &&
+   20|      0|            lhs.lat == rhs.lat
+   21|      0|    }
+   22|       |}
+
+/Users/raduj/Downloads/Backbase/Backbase/Scenes/Home/Presenter/HomePresenter.swift:
+    1|       |//
+    2|       |//  HomePresenter.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/23/18.
+    6|       |//  Copyright (c) 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |//  This file was generated by the Clean Swift Xcode Templates so
+    9|       |//  you can apply clean architecture to your iOS and Mac projects,
+   10|       |//  see http://clean-swift.com
+   11|       |//
+   12|       |
+   13|       |import UIKit
+   14|       |
+   15|       |protocol HomePresentationLogic {
+   16|       |    func presentListOfCities(cities: [City])
+   17|       |    func presentError(message: String)
+   18|       |    func presentLoading()
+   19|       |    func closeLoading()
+   20|       |}
+   21|       |
+   22|       |class HomePresenter: HomePresentationLogic {
+   23|       |    
+   24|       |    weak var viewController: HomeDisplayLogic?
+   25|       |    
+   26|      0|    func presentLoading() {
+   27|      0|        viewController?.displayLoading()
+   28|      0|    }
+   29|       |    
+   30|      0|    func closeLoading() {
+   31|      0|        viewController?.hideLoading()
+   32|      0|    }
+   33|       |    
+   34|      0|    func presentError(message: String) {
+   35|      0|        viewController?.displayError(message)
+   36|      0|    }
+   37|       |  
+   38|      1|  func presentListOfCities(cities: [City]) {
+   39|      1|    viewController?.displayCities(cities)
+   40|      1|  }
+   41|       |}
+
+/Users/raduj/Downloads/Backbase/Backbase/Scenes/Home/Views/CustomViews/CityItemCell.swift:
+    1|       |//
+    2|       |//  CityItemCell.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/23/18.
+    6|       |//  Copyright © 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import UIKit
+   10|       |
+   11|       |class CityItemCell: UITableViewCell {
+   12|       |    
+   13|       |    @IBOutlet weak var cityNameLabel: UILabel!
+   14|       |    
+   15|       |    var city: City? {
+   16|      0|        didSet {
+   17|      0|            self.cityNameLabel.text = self.city?.name
+   18|      0|        }
+   19|       |    }
+   20|       |}
+
+/Users/raduj/Downloads/Backbase/Backbase/Scenes/Home/Views/HomeViewController.swift:
+    1|       |//
+    2|       |//  HomeViewController.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/23/18.
+    6|       |//  Copyright © 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import UIKit
+   10|       |
+   11|       |protocol HomeDisplayLogic: class {
+   12|       |    func hideLoading()
+   13|       |    func displayLoading()
+   14|       |    func displayCities(_ list: [City])
+   15|       |    func displayError(_ message: String)
+   16|       |}
+   17|       |
+   18|       |class HomeViewController: UIViewController {
+   19|       |    
+   20|       |    //MARK: Outlets
+   21|       |    @IBOutlet weak var auxView: UIView!
+   22|       |    @IBOutlet weak var searchBar: UISearchBar!
+   23|       |    @IBOutlet weak var tableView: UITableView!
+   24|       |    
+   25|       |    //MARK: Properties
+   26|       |    var isSearching = false
+   27|       |    var tableViewData: [String] = []
+   28|       |    var filteredData: [String] = []
+   29|       |    var interactor: HomeInteractor?
+   30|       |    
+   31|       |    //MARK: Lifecycle
+   32|      1|    override func viewDidLoad() {
+   33|      1|        super.viewDidLoad()
+   34|      1|        
+   35|      1|        self.setup()
+   36|      1|        self.interactor?.getCities()
+   37|      1|    }
+   38|       |    
+   39|      1|    override func viewWillAppear(_ animated: Bool) {
+   40|      1|        super.viewWillAppear(animated)
+   41|      1|        self.title = "Home"
+   42|      1|    }
+   43|       |    
+   44|      1|    func setup() {
+   45|      1|        self.tableView.delegate = self
+   46|      1|        self.tableView.dataSource = self
+   47|      1|        self.searchBar.delegate = self
+   48|      1|        
+   49|      1|        registerCells()
+   50|      1|        
+   51|      1|        let interactor = HomeInteractor()
+   52|      1|        self.interactor = interactor
+   53|      1|        let presenter = HomePresenter()
+   54|      1|        presenter.viewController = self
+   55|      1|        interactor.presenter = presenter
+   56|      1|        
+   57|      1|        if let navigationController = self.navigationController {
+   58|      1|            BackbaseRouter.setupRouter(navigationController: navigationController)
+   59|      1|        }
+   60|      1|    }
+   61|       |    
+   62|      1|    func registerCells() {
+   63|      1|        self.tableView.register(UINib(nibName: "CityItemCell", bundle: nil), forCellReuseIdentifier: "CityItemCell")
+   64|      1|    }
+   65|       |}
+   66|       |
+   67|       |//MARK: HomeDisplayLogic
+   68|       |extension HomeViewController: HomeDisplayLogic {
+   69|       |    
+   70|      1|    func displayCities(_ list: [City]) {
+   71|      1|        var listName: [String] = []
+   72|   209k|        for item in list {
+   73|   209k|            listName.append(item.name)
+   74|   209k|        }
+   75|      1|        self.tableViewData = listName
+   76|      1|        self.tableView.reloadData()
+   77|      1|    }
+   78|       |    
+   79|      0|    func hideLoading() {
+   80|      0|        //implement the loading
+   81|      0|    }
+   82|       |    
+   83|      0|    func displayLoading() {
+   84|      0|        //implement the loading
+   85|      0|    }
+   86|       |    
+   87|      0|    func displayError(_ message: String) {
+   88|      0|        // implement the display error
+   89|      0|    }
+   90|       |}
+   91|       |
+   92|       |//MARK: UITableViewDelegate / UITableViewDataSource
+   93|       |extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+   94|       |    
+   95|      4|    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+   96|      4|        if isSearching {
+   97|      0|            return self.filteredData.count
+   98|      4|        } else {
+   99|      4|            return self.tableViewData.count
+  100|      4|        }
+  101|      0|        
+  102|      0|    }
+  103|       |    
+  104|     17|    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  105|     17|        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CityItemCell", for: indexPath) as? CityItemCell else {
+  106|      0|            return UITableViewCell()
+  107|     17|        }
+  108|     17|        
+  109|     17|        if isSearching {
+  110|      0|            cell.cityNameLabel.text = filteredData[indexPath.row]
+  111|     17|        } else {
+  112|     17|            cell.cityNameLabel.text = tableViewData[indexPath.row]
+  113|     17|        }
+  114|     17|        
+  115|     17|        return cell
+  116|     17|    }
+  117|       |    
+  118|      0|    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+  119|      0|        guard let cell = tableView.cellForRow(at: indexPath) as? CityItemCell else {
+  120|      0|            displayError("Error teying to ge the city selected.")
+  121|      0|            return
+  122|      0|        }
+  123|      0|        
+  124|      0|        guard let city = cell.city else {
+  125|      0|            displayError("Error teying to ge the city selected.")
+  126|      0|            return
+  127|      0|        }
+  128|      0|        
+  129|      0|        self.searchBar.resignFirstResponder()
+  130|      0|        BackbaseRouter.routeToCityDetails(city: city)
+  131|      0|    }
+  132|       |}
+  133|       |
+  134|       |//MARK: UISearchBarDelegate
+  135|       |extension HomeViewController: UISearchBarDelegate {
+  136|       |    
+  137|      0|    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+  138|      0|        self.isSearching = false
+  139|      0|        self.filteredData = []
+  140|      0|        self.tableView.reloadData()
+  141|      0|        self.searchBar.text = ""
+  142|      0|        self.searchBar.resignFirstResponder()
+  143|      0|        let indexPath = NSIndexPath(item: 0, section: 0)
+  144|      0|        self.tableView.scrollToRow(at: indexPath as IndexPath, at: UITableView.ScrollPosition.middle, animated: true)
+  145|      0|
+  146|      0|    }
+  147|       |    
+  148|      0|    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+  149|      0|        self.isSearching = true
+  150|      0|        let array = tableViewData.filter{($0.starts(with: searchBar.text ?? ""))}
+  151|      0|        
+  152|      0|        if array.isEmpty {
+  153|      0|            print("show Empty View")
+  154|      0|        } else {
+  155|      0|            self.filteredData = array
+  156|      0|            self.tableView.reloadData()
+  157|      0|        }
+  158|      0|        
+  159|      0|        self.searchBar.resignFirstResponder()
+  160|      0|    }
+  161|       |    
+  162|      0|    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+  163|      0|        self.isSearching = true
+  164|      0|        guard let textToSearch = searchBar.text else { return }
+  165|      0|        let array = Trie.shared.findWordsWithPrefix(prefix: textToSearch)
+  166|      0|        
+  167|      0|        if array.isEmpty {
+  168|      0|            print("show Empty View")
+  169|      0|        } else {
+  170|      0|            self.filteredData = array
+  171|      0|            self.tableView.reloadData()
+  172|      0|        }
+  173|      0|    }
+  174|       |}
+
+/Users/raduj/Downloads/Backbase/Backbase/Scenes/LocationDetail/View/LocationDetailViewController.swift:
+    1|       |//
+    2|       |//  LocationDetailViewController.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/25/18.
+    6|       |//  Copyright © 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import UIKit
+   10|       |import MapKit
+   11|       |import CoreLocation
+   12|       |
+   13|       |class LocationDetailViewController: UIViewController {
+   14|       |    
+   15|       |    //MARK: Outlets
+   16|       |    @IBOutlet weak var map: MKMapView!
+   17|       |    @IBOutlet weak var cityName: UILabel!
+   18|       |    @IBOutlet weak var countryLabel: UILabel!
+   19|       |    @IBOutlet weak var latitudeLabel: UILabel!
+   20|       |    @IBOutlet weak var longitudeLabel: UILabel!
+   21|       |    @IBOutlet weak var labelsContentView: UIView!
+   22|       |    @IBOutlet weak var segmentControl: UISegmentedControl!
+   23|       |    @IBOutlet weak var mapHeightConstraint: NSLayoutConstraint!
+   24|       |    
+   25|       |    //MARK: Properties
+   26|       |    var city: City?
+   27|       |    let regionRadius: CLLocationDistance = 800000
+   28|       |    var locationManager = CLLocationManager()
+   29|       |    
+   30|       |    //MARK: Lifecycle
+   31|      0|    override func viewDidLoad() {
+   32|      0|        super.viewDidLoad()
+   33|      0|        
+   34|      0|        setCityInfo()
+   35|      0|        configViews()
+   36|      0|    }
+   37|       |    
+   38|      0|    override func viewWillAppear(_ animated: Bool) {
+   39|      0|        super.viewWillAppear(animated)
+   40|      0|        
+   41|      0|        self.title = "City Details"
+   42|      0|    }
+   43|       |    
+   44|      0|    @objc func mapTypeChanged(_ segControl: UISegmentedControl) {
+   45|      0|        switch segControl.selectedSegmentIndex {
+   46|      0|        case 0:
+   47|      0|            map.mapType = .standard
+   48|      0|        case 1:
+   49|      0|            map.mapType = .hybrid
+   50|      0|        case 2:
+   51|      0|            map.mapType = .satellite
+   52|      0|        default: break
+   53|      0|        }
+   54|      0|    }
+   55|       |    
+   56|      0|    func configViews() {
+   57|      0|        setShadow()
+   58|      0|        self.labelsContentView.layer.cornerRadius = 10
+   59|      0|        self.mapHeightConstraint.constant = (self.view.frame.height / 2)
+   60|      0|        self.segmentControl.addTarget(self, action: #selector(mapTypeChanged(_:)), for: .valueChanged)
+   61|      0|    }
+   62|       |    
+   63|      0|    func setCityInfo() {
+   64|      0|        let latitude = city?.coord.lat ?? 0.0
+   65|      0|        let longitude = city?.coord.lon ?? 0.0
+   66|      0|        
+   67|      0|        self.cityName.text = city?.name
+   68|      0|        self.countryLabel.text = "Country code: \(city?.country ?? "")"
+   69|      0|        self.latitudeLabel.text = "Latitude: \(latitude)"
+   70|      0|        self.longitudeLabel.text = "Longitude: \(longitude)"
+   71|      0|        
+   72|      0|        setLocationOnTheMap()
+   73|      0|    }
+   74|       |    
+   75|      0|    func setLocationOnTheMap() {
+   76|      0|        let cityLocation = CLLocation(latitude: city?.coord.lat ?? 0.0, longitude: city?.coord.lon ?? 0.0)
+   77|      0|        centerMapOnLocation(location: cityLocation)
+   78|      0|    }
+   79|       |    
+   80|      0|    func centerMapOnLocation(location: CLLocation) {
+   81|      0|        let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
+   82|      0|                                                  latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+   83|      0|        map.setRegion(coordinateRegion, animated: true)
+   84|      0|        addPinOnMap()
+   85|      0|    }
+   86|       |    
+   87|      0|    func addPinOnMap() {
+   88|      0|        let annotation = MKPointAnnotation()
+   89|      0|        let pointCoord = CLLocationCoordinate2D(latitude: city?.coord.lat ?? 0.0, longitude: city?.coord.lon ?? 0.0)
+   90|      0|        annotation.coordinate = pointCoord
+   91|      0|        annotation.title = city?.name
+   92|      0|        map.addAnnotation(annotation)
+   93|      0|    }
+   94|       |    
+   95|      0|    func setShadow(color: UIColor? = nil) {
+   96|      0|        self.labelsContentView.layer.shadowColor = color?.cgColor ?? UIColor.black.cgColor
+   97|      0|        self.labelsContentView.layer.shadowOpacity = 0.6
+   98|      0|        self.labelsContentView.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+   99|      0|        self.labelsContentView.layer.shadowRadius = 5.0
+  100|      0|    }
+  101|       |}
+
+/Users/raduj/Downloads/Backbase/Backbase/Workers/BackbaseError.swift:
+    1|       |//
+    2|       |//  BackbaseError.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/29/18.
+    6|       |//  Copyright © 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import Foundation
+   10|       |
+   11|       |enum BackbaseError: Error {
+   12|       |    case parseError
+   13|       |    
+   14|      0|    var errorMessage: String {
+   15|      0|        switch self {
+   16|      0|        case .parseError:
+   17|      0|            return Constants.parseErrorMessage
+   18|      0|        default:
+   19|      0|            return Constants.defaultErrorMessage
+   20|      0|        }
+   21|      0|    }
+   22|       |}
+
+/Users/raduj/Downloads/Backbase/Backbase/Workers/BackbaseWorker.swift:
+    1|       |//
+    2|       |//  BackBaseWorker.swift
+    3|       |//  Backbase
+    4|       |//
+    5|       |//  Created by Thiago Santiago on 12/23/18.
+    6|       |//  Copyright (c) 2018 Thiago Santiago. All rights reserved.
+    7|       |//
+    8|       |//  This file was generated by the Clean Swift Xcode Templates so
+    9|       |//  you can apply clean architecture to your iOS and Mac projects,
+   10|       |//  see http://clean-swift.com
+   11|       |//
+   12|       |
+   13|       |import UIKit
+   14|       |
+   15|       |enum Result<Value, BackbaseError> {
+   16|       |    case success(Value)
+   17|       |    case failure(BackbaseError)
+   18|       |}
+   19|       |
+   20|       |class BackbaseWorker {
+   21|       |    
+   22|       |    typealias  citiesResult = (Result<[City], BackbaseError>) -> Void
+   23|      3|    func loadCities(result: @escaping citiesResult) {
+   24|      3|        
+   25|      3|        var cities: [City] = []
+   26|      3|        
+   27|      3|        if let path = Bundle.main.path(forResource: "big", ofType: "json") {
+   28|      3|            do {
+   29|      3|                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+   30|      3|                let decoder = JSONDecoder()
+   31|      3|                cities = try decoder.decode([City].self, from: data)
+   32|      3|                
+   33|   628k|                for city in cities {
+   34|   628k|                    Trie.shared.insert(word: city.name)
+   35|   628k|                }
+   36|      3|                
+   37|      3|                result(.success(cities))
+   38|      3|            } catch {
+   39|      0|                result(.failure(.parseError))
+   40|      3|            }
+   41|      3|        }
+   42|      3|    }
+   43|       |}
+
