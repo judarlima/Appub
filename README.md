@@ -10,7 +10,7 @@
 
 ## Instructions
 ```bash
-$ git clone https://github.com/judarlima/Appub.git
-$ cd Appub
+$ git clone https://github.com/judarlima/appub.git
+$ cd appub
 $ pod install
 ```
